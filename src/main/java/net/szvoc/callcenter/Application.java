@@ -1,6 +1,6 @@
 package net.szvoc.callcenter;
 
-import net.szvoc.callcenter.sip.net.UdpSipServer;
+import net.szvoc.callcenter.sip.core.net.UdpSipServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

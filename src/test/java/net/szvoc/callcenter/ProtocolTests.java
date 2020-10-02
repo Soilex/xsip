@@ -1,9 +1,8 @@
 package net.szvoc.callcenter;
 
 import lombok.var;
-import net.szvoc.callcenter.sip.HeaderFactory;
-import net.szvoc.callcenter.sip.header.RouteHeader;
-import net.szvoc.callcenter.sip.protocol.Request;
+import net.szvoc.callcenter.sip.core.HeaderFactory;
+import net.szvoc.callcenter.sip.core.Request;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
