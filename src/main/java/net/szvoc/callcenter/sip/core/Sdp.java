@@ -12,13 +12,13 @@ import java.util.List;
 public class Sdp {
     private final static String FIELD_VERSION = "v"; //协议版本
     private final static String FIELD_BANDWIDTH = "b"; //带宽信息
-    private final static String FIELD_OWNER = "o"; //会话主人和标志
+    private final static String FIELD_ORIGIN = "o"; //会话主人和标志
     private final static String FIELD_ZONE = "z"; //时区
-    private final static String FIELD_NAME = "s"; //会话名称
+    private final static String FIELD_SESSION_NAME = "s"; //会话名称
     private final static String FIELD_KEY = "k"; //密钥
     private final static String FIELD_INFO = "i"; //会话信息
     private final static String FIELD_ATTRIBUTE = "a"; //属性行
-    private final static String FIELD_URL = "u"; //含有会话描述的url
+    private final static String FIELD_URI = "u"; //含有会话描述的url
     private final static String FIELD_TIME = "t"; //会话激活时间
     private final static String FIELD_EMAIL = "e"; //获取会话信息的email地址
     private final static String FIELD_REPEAT = "r"; //会话重复次数
@@ -27,14 +27,14 @@ public class Sdp {
     private final static String FIELD_MEDIA = "m"; //媒体行
 
     private int version;
-    private String bandwidth;
-    private Owner owner;
+    private String bandWidth;
+    private Origin origin;
     private String zone;
-    private String name;
+    private String sessionName;
     private String key;
     private String info;
     private String attribute;
-    private String url;
+    private String uri;
     private String time;
     private String email;
     private int repeat;
@@ -53,16 +53,16 @@ public class Sdp {
                     sdp.setVersion(Integer.parseInt(field.getValue()));
                     break;
                 case FIELD_BANDWIDTH:
-                    sdp.setBandwidth(field.getValue());
+                    sdp.setBandWidth(field.getValue());
                     break;
-                case FIELD_OWNER:
-                    sdp.setOwner(Owner.parse(field.getValue()));
+                case FIELD_ORIGIN:
+                    sdp.setOrigin(Origin.parse(field.getValue()));
                     break;
                 case FIELD_ZONE:
                     sdp.setZone(field.getValue());
                     break;
-                case FIELD_NAME:
-                    sdp.setName(field.getValue());
+                case FIELD_SESSION_NAME:
+                    sdp.setSessionName(field.getValue());
                     break;
                 case FIELD_KEY:
                     sdp.setKey(field.getValue());
@@ -77,8 +77,8 @@ public class Sdp {
                         media.attr(field.getValue());
                     }
                     break;
-                case FIELD_URL:
-                    sdp.setUrl(field.getValue());
+                case FIELD_URI:
+                    sdp.setUri(field.getValue());
                     break;
                 case FIELD_TIME:
                     sdp.setTime(field.getValue());
@@ -109,12 +109,12 @@ public class Sdp {
     @Getter
     @Setter(AccessLevel.PRIVATE)
     @AllArgsConstructor
-    public static class Owner {
+    public static class Origin {
         private String name;
         private String addressFamily;
         private String host;
 
-        public static Owner parse(String text) {
+        public static Origin parse(String text) {
             //TODO not implement
             throw new NotImplementedException();
         }
