@@ -9,12 +9,12 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SipEventListener {
+public class RegisterEventListener {
     @Autowired
     private AuthenticateService authenticateService;
 
-    @EventListener(condition = "#event.direction.name() == 'IN' && #event.message.method() == 'REGISTER'")
-    public void onRegister(SipEvent event) {
+    @EventListener(condition = "#event.direction == T(net.szvoc.callcenter.sip.core.InOutFlag).IN && #event.message.method() == T(net.szvoc.callcenter.sip.core.SipMethod).REGISTER")
+    public void onEvent(SipEvent event) {
         var request = event.getMessage();
         var connection = event.getSource();
 

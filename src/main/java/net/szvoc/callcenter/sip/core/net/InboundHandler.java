@@ -16,7 +16,7 @@ import java.nio.charset.StandardCharsets;
 @Slf4j
 @AllArgsConstructor
 public class InboundHandler extends ChannelInboundHandlerAdapter {
-    private SipServer server;
+    private UdpTransport transport;
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
@@ -25,8 +25,8 @@ public class InboundHandler extends ChannelInboundHandlerAdapter {
         log.debug("[ IN] {} {}", ctx.channel().id(), payload);
         if (!payload.equalsIgnoreCase("\r\n")) {
             var request = Request.parse(packet.sender(), packet.recipient(), payload);
-            var connection = server.select(ctx.channel());
-            server.triggerEvent(new SipEvent(connection, InOutFlag.IN, request));
+            var connection = transport.select(ctx.channel());
+            transport.triggerEvent(new SipEvent(connection, InOutFlag.IN, request));
         } else {
             var ack = new DatagramPacket(Unpooled.copiedBuffer("\r\n", StandardCharsets.UTF_8), packet.sender());
             ctx.writeAndFlush(ack);

@@ -6,13 +6,16 @@ import io.netty.channel.socket.DatagramPacket;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
+import net.szvoc.callcenter.sip.core.InOutFlag;
 import net.szvoc.callcenter.sip.core.Message;
+import net.szvoc.callcenter.sip.core.event.SipEvent;
 
 import java.net.InetSocketAddress;
 
 @Slf4j
 @AllArgsConstructor
 public class Connection {
+    private Transport transport;
     private Channel channel;
 
     public InetSocketAddress localAddress() {
@@ -22,7 +25,7 @@ public class Connection {
     public void send(Message message) {
         var packet = new DatagramPacket(Unpooled.copiedBuffer(message.buffer()), message.recipient());
         this.channel.writeAndFlush(packet);
-
+        this.transport.triggerEvent(new SipEvent(this, InOutFlag.OUT, message));
         log.debug("[OUT] {} {}", this.channel.id(), message.string());
     }
 }

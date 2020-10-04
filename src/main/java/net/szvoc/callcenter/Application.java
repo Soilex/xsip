@@ -1,6 +1,6 @@
 package net.szvoc.callcenter;
 
-import net.szvoc.callcenter.sip.core.net.UdpSipServer;
+import net.szvoc.callcenter.sip.core.net.UdpTransport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -14,10 +14,10 @@ public class Application implements CommandLineRunner {
     }
 
     @Autowired
-    private UdpSipServer sipServer;
+    private UdpTransport udpTransport;
 
     @Override
     public void run(String... args) throws Exception {
-        sipServer.open();
+        udpTransport.open();
     }
 }

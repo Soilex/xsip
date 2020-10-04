@@ -4,9 +4,9 @@ import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.socket.nio.NioDatagramChannel;
-import io.netty.util.AttributeKey;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
+import net.szvoc.callcenter.sip.core.SipTransport;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -14,26 +14,23 @@ import java.net.InetSocketAddress;
 
 @Slf4j
 @Component
-public class UdpSipServer extends SipServer {
+public class UdpTransport extends Transport {
 
-    private AttributeKey<Connection> KEY_CONNECTION = AttributeKey.newInstance("CONNECTION");
+    private Connection connection;
 
-    public UdpSipServer(@Value("${sip.bind:127.0.0.1}") String host, @Value("${sip.port:5060}") int port) {
+    public UdpTransport(@Value("${sip.bind:127.0.0.1}") String host, @Value("${sip.port:5060}") int port) {
         super(new InetSocketAddress(host, port));
     }
 
     @Override
-    public Transport getTransport() {
-        return Transport.UDP;
+    public SipTransport getTransportType() {
+        return SipTransport.UDP;
     }
 
     @Override
     public synchronized Connection select(Channel channel) {
-        var attr = channel.attr(KEY_CONNECTION);
-        var connection = attr.get();
         if (connection == null) {
-            connection = new Connection(channel);
-            attr.set(connection);
+            connection = new Connection(this, channel);
         }
         return connection;
     }
