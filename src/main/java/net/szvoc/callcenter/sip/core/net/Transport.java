@@ -37,13 +37,13 @@ public abstract class Transport implements AutoCloseable {
     public abstract Connection select(Channel channel);
 
     public void open() throws Exception {
-        log.info("Sip server startup at {}:{}:{}.", getTransportType().name().toLowerCase(), bind.getHostName(), bind.getPort());
+        log.info("Sip transport open at {}:{}:{}.", getTransportType().name().toLowerCase(), bind.getHostName(), bind.getPort());
     }
 
     @Override
     public void close() throws Exception {
         this.channel.close();
-        log.info("Sip server shutdown at {}:{}:{}.", getTransportType().name().toLowerCase(), bind.getHostName(), bind.getPort());
+        log.info("Sip transport close at {}:{}:{}.", getTransportType().name().toLowerCase(), bind.getHostName(), bind.getPort());
     }
 
     public void triggerEvent(SipEvent event) {
