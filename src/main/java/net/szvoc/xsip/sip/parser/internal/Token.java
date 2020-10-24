@@ -1,8 +1,7 @@
 package net.szvoc.xsip.sip.parser.internal;
 
-import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.Setter;
+import net.szvoc.xsip.sip.parser.SyntaxException;
 
 
 public abstract class Token {
@@ -10,10 +9,6 @@ public abstract class Token {
     private TokenType tokenType;
 
     protected Lexer lexer;
-
-    @Getter(AccessLevel.PROTECTED)
-    @Setter(AccessLevel.PROTECTED)
-    private String tokenValue;
 
     protected Token(TokenType tokenType, Lexer lexer) {
         this.tokenType = tokenType;

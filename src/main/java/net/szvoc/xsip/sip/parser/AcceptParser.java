@@ -20,12 +20,12 @@ public class AcceptParser extends Parser<AcceptHeader> {
             }
             lexer.skipBlank();
             WordToken typeToken = lexer.nextToken(TokenType.WORD);
-            String type = typeToken.getTokenValue();
+            String type = typeToken.getValue();
             if (!CharacterType.SLASH.isMatch(lexer.read())) {
                 lexer.throwSyntaxException();
             }
             WordToken subTypeToken = lexer.nextToken(TokenType.WORD);
-            String subType = subTypeToken.getTokenValue();
+            String subType = subTypeToken.getValue();
             AcceptHeader.ContentType contentType = new AcceptHeader.ContentType();
             contentType.setContentType(type);
             contentType.setContentSubType(subType);

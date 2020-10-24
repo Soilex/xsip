@@ -1,6 +1,7 @@
 package net.szvoc.xsip.sip.header;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import net.szvoc.xsip.sip.common.Parametric;
 
 /**
@@ -30,6 +31,7 @@ import net.szvoc.xsip.sip.common.Parametric;
  * @version 1.2
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class AcceptHeader extends Header<AcceptHeader.ContentType> {
     @Override
     public String getName() {
@@ -37,6 +39,7 @@ public class AcceptHeader extends Header<AcceptHeader.ContentType> {
     }
 
     @Data
+    @EqualsAndHashCode(callSuper = true)
     public static class ContentType extends Parametric<String> {
         private float qValue = 1.0f;
         private String contentType;

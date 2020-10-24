@@ -1,20 +1,19 @@
 package net.szvoc.xsip.sip.parser.internal;
 
-import org.springframework.util.StringUtils;
+import lombok.Getter;
+import net.szvoc.xsip.sip.parser.SyntaxException;
 
+@BindingType(TokenType.WORD)
 public class WordToken extends Token {
+    @Getter
+    private String value;
+
     public WordToken(Lexer lexer) {
         super(TokenType.WORD, lexer);
     }
 
     @Override
-    public String getTokenValue() {
-        return super.getTokenValue();
-    }
-
-    @Override
     protected void scan() throws SyntaxException {
-        lexer.skipBlank();
         StringBuilder stringBuilder = new StringBuilder();
         while (!lexer.isEOF()) {
             char ch = lexer.read();
@@ -25,10 +24,9 @@ public class WordToken extends Token {
                 break;
             }
         }
-        String value = stringBuilder.toString();
-        if (StringUtils.isEmpty(value)) {
+        if (stringBuilder.length() == 0) {
             lexer.throwSyntaxException();
         }
-        super.setTokenValue(value);
+        this.value = stringBuilder.toString();
     }
 }

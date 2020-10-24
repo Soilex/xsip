@@ -1,5 +1,7 @@
 package net.szvoc.xsip.sip.parser.internal;
 
+import net.szvoc.xsip.sip.parser.SyntaxException;
+
 public class Lexer {
     private String source;
     private int position = 0;
@@ -25,31 +27,23 @@ public class Lexer {
         return source.charAt(position++);
     }
 
-    public void skip(int offset) {
+    public Lexer skip(int offset) {
         position += offset;
+        return this;
     }
 
-    public void back() {
+    public Lexer back() {
         position--;
+        return this;
     }
 
     public <T extends Token> T nextToken(TokenType tokenType) throws SyntaxException {
-        Token token = null;
-        switch (tokenType) {
-            case WORD:
-                token = new WordToken(this);
-                break;
-            case PARAMETER:
-                token = new ParameterToken(this);
-                break;
-            default:
-                throwSyntaxException();
-        }
+        Token token = TokenFactory.create(tokenType, this);
         token.scan();
         return (T) token;
     }
 
-    public void skipBlank() {
+    public Lexer skipBlank() {
         while (!isEOF()) {
             char ch = source.charAt(position);
             if (!CharacterType.BLANK.isMatch(ch)) {
@@ -57,6 +51,7 @@ public class Lexer {
             }
             position++;
         }
+        return this;
     }
 
     public boolean isEndOfLine() {

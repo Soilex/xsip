@@ -1,39 +1,44 @@
 package net.szvoc.xsip.sip.parser.internal;
 
+import net.szvoc.xsip.sip.parser.SyntaxException;
+
+@BindingType(TokenType.NUMERIC)
 public class NumericToken extends Token {
+    private String value;
+
     public NumericToken(Lexer lexer) {
         super(TokenType.NUMERIC, lexer);
     }
 
     public int getIn32() {
-        return Integer.parseInt(super.getTokenValue());
+        return Integer.parseInt(value);
     }
 
     public long getInt64() {
-        return Long.parseLong(super.getTokenValue());
+        return Long.parseLong(value);
     }
 
     public float getFloat() {
-        return Float.parseFloat(super.getTokenValue());
+        return Float.parseFloat(value);
     }
 
     @Override
     protected void scan() throws SyntaxException {
-        lexer.skipBlank();
         StringBuilder stringBuilder = new StringBuilder();
         boolean dot = false;
         while (!lexer.isEOF()) {
-            char ch = lexer.read();
+            char ch = lexer.look();
             if (CharacterType.DOT.isMatch(ch)) {
                 if (dot) { // 小数点只能出现一次
-                    lexer.back();
                     break;
                 } else {
                     dot = true;
                     stringBuilder.append(ch);
+                    lexer.skip(1);
                 }
             } else if (CharacterType.DIGIT.isMatch(ch)) {
                 stringBuilder.append(ch);
+                lexer.skip(1);
             } else {
                 break;
             }
@@ -41,6 +46,6 @@ public class NumericToken extends Token {
         if (stringBuilder.length() == 0 || stringBuilder.equals(".")) {
             lexer.throwSyntaxException();
         }
-        super.setTokenValue(stringBuilder.toString());
+        this.value = stringBuilder.toString();
     }
 }

@@ -1,4 +1,4 @@
-package net.szvoc.xsip.sip.parser.internal;
+package net.szvoc.xsip.sip.parser;
 
 public class SyntaxException extends Exception {
     public SyntaxException(int position, String fragment) {

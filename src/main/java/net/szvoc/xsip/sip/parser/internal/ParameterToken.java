@@ -1,7 +1,9 @@
 package net.szvoc.xsip.sip.parser.internal;
 
 import lombok.Getter;
+import net.szvoc.xsip.sip.parser.SyntaxException;
 
+@BindingType(TokenType.PARAMETER)
 public class ParameterToken extends Token {
     @Getter
     private String parameterName;
@@ -15,13 +17,13 @@ public class ParameterToken extends Token {
 
     @Override
     protected void scan() throws SyntaxException {
-        lexer.skipBlank();
         if (CharacterType.SEMICOLON.isMatch(lexer.read())) {
             WordToken parameterNameToken = lexer.nextToken(TokenType.WORD);
-            parameterName = parameterNameToken.getTokenValue();
-            if (CharacterType.EQUALS.isMatch(lexer.read())) {
+            parameterName = parameterNameToken.getValue();
+            if (CharacterType.EQUALS.isMatch(lexer.look())) {
+                lexer.skip(1);
                 WordToken parameterValueToken = lexer.nextToken(TokenType.WORD);
-                parameterValue = parameterValueToken.getTokenValue();
+                parameterValue = parameterValueToken.getValue();
             }
         } else {
             lexer.throwSyntaxException();
