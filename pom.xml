@@ -9,10 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>net.szvoc.callcenter</groupId>
-    <artifactId>callcenter-core</artifactId>
+    <artifactId>xsip</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-    <name>core</name>
-    <description>Demo project for Spring Boot</description>
+    <name>xsip</name>
 
     <properties>
         <java.version>1.8</java.version>
@@ -67,6 +66,18 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                        <exclude>
+                            <groupId>org.springframework.boot</groupId>
+                            <artifactId>spring-boot-configuration-processor</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
             </plugin>
         </plugins>
     </build>
