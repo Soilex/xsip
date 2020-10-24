@@ -1,8 +1,9 @@
 package net.szvoc.xsip.sip.parser.internal;
 
 import net.szvoc.xsip.sip.parser.SyntaxException;
+import net.szvoc.xsip.sip.parser.annotation.BindingTokenType;
 
-@BindingType(TokenType.NUMERIC)
+@BindingTokenType(TokenType.NUMERIC)
 public class NumericToken extends Token {
     private String value;
 

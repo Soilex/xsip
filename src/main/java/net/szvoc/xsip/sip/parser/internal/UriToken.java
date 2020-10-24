@@ -3,8 +3,9 @@ package net.szvoc.xsip.sip.parser.internal;
 import lombok.Getter;
 import net.szvoc.xsip.sip.common.URI;
 import net.szvoc.xsip.sip.parser.SyntaxException;
+import net.szvoc.xsip.sip.parser.annotation.BindingTokenType;
 
-@BindingType(TokenType.URI)
+@BindingTokenType(TokenType.URI)
 public class UriToken extends Token {
     @Getter
     private URI value;

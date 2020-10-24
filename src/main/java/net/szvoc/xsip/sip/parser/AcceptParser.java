@@ -1,8 +1,11 @@
 package net.szvoc.xsip.sip.parser;
 
 import net.szvoc.xsip.sip.header.AcceptHeader;
+import net.szvoc.xsip.sip.header.HeaderName;
+import net.szvoc.xsip.sip.parser.annotation.BindingHeaderName;
 import net.szvoc.xsip.sip.parser.internal.*;
 
+@BindingHeaderName(HeaderName.ACCEPT)
 public class AcceptParser extends Parser<AcceptHeader> {
     private static final String Q_VALUE = "q-value";
 

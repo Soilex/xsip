@@ -1,9 +1,9 @@
-package net.szvoc.xsip;
+package net.szvoc.xsip.header;
 
 import net.szvoc.xsip.sip.header.AcceptHeader;
 import net.szvoc.xsip.sip.parser.Parser;
-import net.szvoc.xsip.sip.parser.internal.Lexer;
 import net.szvoc.xsip.sip.parser.SyntaxException;
+import net.szvoc.xsip.sip.parser.internal.Lexer;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -11,10 +11,10 @@ import java.math.BigDecimal;
 import java.util.Iterator;
 
 @SpringBootTest
-class SipHeadTests {
+class AcceptTests {
 
     @Test
-    void parseAccept() throws SyntaxException {
+    void parse() throws SyntaxException {
         String text = "Accept: application/sdp;q-value=0.5;level=1, application/x-private;q-value=0.3, text/html\r\n";
         AcceptHeader header = Parser.parser(new Lexer(text), Parser.DELIMITER_COLON);
         Iterator<AcceptHeader.ContentType> iterator = header.iterator();

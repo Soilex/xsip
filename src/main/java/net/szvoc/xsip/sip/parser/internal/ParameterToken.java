@@ -2,8 +2,9 @@ package net.szvoc.xsip.sip.parser.internal;
 
 import lombok.Getter;
 import net.szvoc.xsip.sip.parser.SyntaxException;
+import net.szvoc.xsip.sip.parser.annotation.BindingTokenType;
 
-@BindingType(TokenType.PARAMETER)
+@BindingTokenType(TokenType.PARAMETER)
 public class ParameterToken extends Token {
     @Getter
     private String parameterName;

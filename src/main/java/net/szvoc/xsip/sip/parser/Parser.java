@@ -1,9 +1,9 @@
 package net.szvoc.xsip.sip.parser;
 
-import net.szvoc.xsip.sip.header.HeaderName;
-import net.szvoc.xsip.sip.parser.internal.WordToken;
+import net.szvoc.xsip.sip.header.Header;
 import net.szvoc.xsip.sip.parser.internal.Lexer;
 import net.szvoc.xsip.sip.parser.internal.TokenType;
+import net.szvoc.xsip.sip.parser.internal.WordToken;
 
 public abstract class Parser<T> {
     public static final char DELIMITER_EQUALS = '=';
@@ -17,16 +17,12 @@ public abstract class Parser<T> {
 
     protected abstract T parse(Lexer lexer) throws SyntaxException;
 
-    public static <E> E parser(Lexer lexer, char delimiter) throws SyntaxException {
+    public static <E extends Header> E parser(Lexer lexer, char delimiter) throws SyntaxException {
         WordToken nameToken = lexer.nextToken(TokenType.WORD);
         if (lexer.read() != delimiter) {
             lexer.throwSyntaxException();
         }
         lexer.skipBlank();
-        switch (nameToken.getValue()) {
-            case HeaderName.ACCEPT:
-                return (E) new AcceptParser().parse(lexer);
-        }
-        return null;
+        return (E) ParserFactory.create(nameToken.getValue()).parse(lexer);
     }
 }

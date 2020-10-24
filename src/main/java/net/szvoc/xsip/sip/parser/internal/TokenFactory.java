@@ -1,6 +1,6 @@
 package net.szvoc.xsip.sip.parser.internal;
 
-import lombok.var;
+import net.szvoc.xsip.sip.parser.annotation.BindingTokenType;
 import org.reflections.Reflections;
 
 import java.lang.reflect.Constructor;
@@ -14,9 +14,9 @@ public final class TokenFactory {
 
     public static Token create(TokenType tokenType, Lexer lexer) {
         Constructor<? extends Token> ctor = constructors.computeIfAbsent(tokenType, k -> {
-            var type = subTypes.stream()
+            Class<? extends Token> type = subTypes.stream()
                     .filter(c -> {
-                        var annotation = c.getAnnotation(BindingType.class);
+                        BindingTokenType annotation = c.getAnnotation(BindingTokenType.class);
                         return (annotation != null && annotation.value() == k);
                     })
                     .findAny()
@@ -25,7 +25,7 @@ public final class TokenFactory {
                 return null;
             }
             try {
-                var constructor = type.getDeclaredConstructor(Lexer.class);
+                Constructor<? extends Token> constructor = type.getDeclaredConstructor(Lexer.class);
                 constructor.setAccessible(true);
                 return constructor;
             } catch (Exception e) {

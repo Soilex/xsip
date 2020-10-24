@@ -2,8 +2,9 @@ package net.szvoc.xsip.sip.parser.internal;
 
 import lombok.Getter;
 import net.szvoc.xsip.sip.parser.SyntaxException;
+import net.szvoc.xsip.sip.parser.annotation.BindingTokenType;
 
-@BindingType(TokenType.WORD)
+@BindingTokenType(TokenType.WORD)
 public class WordToken extends Token {
     @Getter
     private String value;
