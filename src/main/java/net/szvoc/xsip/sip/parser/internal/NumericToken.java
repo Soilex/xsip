@@ -26,7 +26,7 @@ public class NumericToken extends Token {
             char ch = lexer.read();
             if (CharacterType.DOT.isMatch(ch)) {
                 if (dot) { // 小数点只能出现一次
-                    lexer.skip(-1);
+                    lexer.back();
                     break;
                 } else {
                     dot = true;

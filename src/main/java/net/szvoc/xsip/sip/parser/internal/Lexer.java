@@ -11,12 +11,26 @@ public class Lexer {
         this.source = source;
     }
 
-    public char read() {
+    public Character look() {
+        if (isEOF()) {
+            return null;
+        }
+        return source.charAt(position);
+    }
+
+    public Character read() {
+        if (isEOF()) {
+            return null;
+        }
         return source.charAt(position++);
     }
 
     public void skip(int offset) {
         position += offset;
+    }
+
+    public void back() {
+        position--;
     }
 
     public <T extends Token> T nextToken(TokenType tokenType) throws SyntaxException {
@@ -46,6 +60,9 @@ public class Lexer {
     }
 
     public boolean isEndOfLine() {
+        if (isEOF()) {
+            return true;
+        }
         return source.charAt(position) == CR && source.charAt(position + 1) == LF;
     }
 

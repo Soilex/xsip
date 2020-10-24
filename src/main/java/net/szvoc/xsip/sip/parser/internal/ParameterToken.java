@@ -16,7 +16,7 @@ public class ParameterToken extends Token {
     @Override
     protected void scan() throws SyntaxException {
         lexer.skipBlank();
-        if (CharacterType.COLON.isMatch(lexer.read())) {
+        if (CharacterType.SEMICOLON.isMatch(lexer.read())) {
             WordToken parameterNameToken = lexer.nextToken(TokenType.WORD);
             parameterName = parameterNameToken.getTokenValue();
             if (CharacterType.EQUALS.isMatch(lexer.read())) {

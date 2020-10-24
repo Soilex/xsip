@@ -13,8 +13,11 @@ public class AcceptParser extends Parser<AcceptHeader> {
     @Override
     protected AcceptHeader parse(Lexer lexer) throws SyntaxException {
         AcceptHeader header = new AcceptHeader();
-        // application/sdp;q-value=0.5;level=1, application/x-private, text/html
+        boolean isFirst = true;
         while (!lexer.isEndOfLine()) {
+            if (!isFirst && !CharacterType.COMMA.isMatch(lexer.read())) {
+                lexer.throwSyntaxException();
+            }
             lexer.skipBlank();
             WordToken typeToken = lexer.nextToken(TokenType.WORD);
             String type = typeToken.getTokenValue();
@@ -28,7 +31,7 @@ public class AcceptParser extends Parser<AcceptHeader> {
             contentType.setContentSubType(subType);
             contentType.setQValue(1f);
             header.add(contentType);
-            while (CharacterType.SEMICOLON.isMatch(lexer.read())) {
+            while (CharacterType.SEMICOLON.isMatch(lexer.look())) {
                 ParameterToken parameterToken = lexer.nextToken(TokenType.PARAMETER);
                 if (parameterToken.getParameterName().equals(Q_VALUE)) {
                     try {
@@ -37,9 +40,12 @@ public class AcceptParser extends Parser<AcceptHeader> {
                     } catch (NumberFormatException ignore) {
                         lexer.throwSyntaxException();
                     }
+                } else {
+                    contentType.setParameter(parameterToken.getParameterName(), parameterToken.getParameterValue());
                 }
                 lexer.skipBlank();
             }
+            isFirst = false;
         }
         return header;
     }

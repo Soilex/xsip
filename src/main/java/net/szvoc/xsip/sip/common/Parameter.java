@@ -3,13 +3,14 @@ package net.szvoc.xsip.sip.common;
 import com.google.common.base.Strings;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.util.StringUtils;
 
 public class Parameter {
     @Getter
     @Setter
     private String name;
-    private String value;
 
+    private String value;
     private boolean quote;
 
     public String getString() {
@@ -17,15 +18,28 @@ public class Parameter {
     }
 
     public void setValue(String value) {
-        this.value = value;
-        this.quote = true;
+        if (StringUtils.hasText(value)) {
+            this.quote = value.startsWith("\"") && value.endsWith("\"");
+            this.value = this.quote ? value.substring(1, value.length() - 1) : value;
+        } else {
+            this.value = value;
+        }
     }
 
-    public int getInteger() {
+    public int getInt32() {
         return Integer.parseInt(value);
     }
 
     public void setValue(int value) {
+        this.value = String.valueOf(value);
+        this.quote = false;
+    }
+
+    public long getInt64() {
+        return Long.parseLong(value);
+    }
+
+    public void setValue(long value) {
         this.value = String.valueOf(value);
         this.quote = false;
     }

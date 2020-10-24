@@ -21,7 +21,7 @@ public class WordToken extends Token {
             if (CharacterType.isMatch(ch, CharacterType.ALPHA, CharacterType.DIGIT, CharacterType.MINUS, CharacterType.UNDERSCORE, CharacterType.DOT)) {
                 stringBuilder.append(ch);
             } else {
-                lexer.skip(-1);
+                lexer.back();
                 break;
             }
         }

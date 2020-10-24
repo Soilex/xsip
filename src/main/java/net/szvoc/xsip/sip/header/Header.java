@@ -1,13 +1,13 @@
 package net.szvoc.xsip.sip.header;
 
-import net.szvoc.xsip.sip.common.Parameter;
 import org.springframework.util.CollectionUtils;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public abstract class Header<T> {
     private List<T> values = new ArrayList<>();
-    private Map<String, Parameter> parameters = new HashMap<>();
 
     public abstract String getName();
 
@@ -19,7 +19,7 @@ public abstract class Header<T> {
         return containsValue() ? values.get(0) : null;
     }
 
-    public Iterator<T> getAll() {
+    public Iterator<T> iterator() {
         return values.iterator();
     }
 
@@ -27,36 +27,12 @@ public abstract class Header<T> {
         values.add(value);
     }
 
-    public Parameter getParameter(String name) {
-        return parameters.getOrDefault(name, null);
+    public void clear() {
+        values.clear();
     }
 
-    public void setParameter(String name, String value) {
-        Parameter parameter = new Parameter();
-        parameter.setName(name);
-        parameter.setValue(value);
-        parameters.put(name, parameter);
-    }
-
-    public void setParameter(String name, int value) {
-        Parameter parameter = new Parameter();
-        parameter.setName(name);
-        parameter.setValue(value);
-        parameters.put(name, parameter);
-    }
-
-    public void setParameter(String name, float value) {
-        Parameter parameter = new Parameter();
-        parameter.setName(name);
-        parameter.setValue(value);
-        parameters.put(name, parameter);
-    }
-
-    public Iterator<Parameter> getParameters() {
-        return parameters.values().iterator();
-    }
-
-    public void removeParameter(String name) {
-        parameters.remove(name);
+    public void set(T value) {
+        clear();
+        add(value);
     }
 }

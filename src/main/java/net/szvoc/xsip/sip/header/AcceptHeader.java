@@ -1,8 +1,7 @@
 package net.szvoc.xsip.sip.header;
 
 import lombok.Data;
-
-import java.util.*;
+import net.szvoc.xsip.sip.common.Parametric;
 
 /**
  * This interface represents an Accept request-header. It can be used in to
@@ -32,14 +31,13 @@ import java.util.*;
  */
 @Data
 public class AcceptHeader extends Header<AcceptHeader.ContentType> {
-
     @Override
     public String getName() {
         return HeaderName.ACCEPT;
     }
 
     @Data
-    public static class ContentType {
+    public static class ContentType extends Parametric<String> {
         private float qValue;
         private String contentType;
         private String contentSubType;

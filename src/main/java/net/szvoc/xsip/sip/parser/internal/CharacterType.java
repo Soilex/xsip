@@ -31,7 +31,7 @@ public enum CharacterType {
     BAR((int) '|'),
     DOT((int) '.'),
     EXCLAMATION((int) '!'),
-    LPAREN((int) ')'),
+    LPAREN((int) '('),
     RPAREN((int) ')'),
     GREATER_THAN((int) '>'),
     LESS_THAN((int) '<'),
@@ -39,6 +39,7 @@ public enum CharacterType {
     QUESTION((int) '?'),
     AND((int) '&'),
     UNDERSCORE((int) '_'),
+    COMMA((int)','),
 
     DIGIT(1024 + 1),
     ALPHA(1024 + 2),
@@ -51,7 +52,10 @@ public enum CharacterType {
         this.code = code;
     }
 
-    public boolean isMatch(char ch) {
+    public boolean isMatch(Character ch) {
+        if (ch == null) {
+            return false;
+        }
         switch (this) {
             case DIGIT:
                 return ch >= '0' && ch <= '9';
@@ -64,7 +68,10 @@ public enum CharacterType {
         }
     }
 
-    public static boolean isMatch(char ch, CharacterType... characterTypes) {
+    public static boolean isMatch(Character ch, CharacterType... characterTypes) {
+        if (ch == null || characterTypes == null || characterTypes.length == 0) {
+            return false;
+        }
         return Arrays.stream(characterTypes).anyMatch(characterType -> characterType.isMatch(ch));
     }
 }
