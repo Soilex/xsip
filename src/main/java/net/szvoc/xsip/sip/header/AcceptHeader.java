@@ -13,7 +13,7 @@ import net.szvoc.xsip.sip.common.Parametric;
  * <p>
  * An AcceptHeader may be followed by one or more parameters applicable to the
  * media-range. q-values allow the user to indicate the relative degree of
- * preference for that media-range, using the qvalue scale from 0 to 1. (If no
+ * preference for that media-range, using the q-value scale from 0 to 1. (If no
  * q-value is present, the media-range should be treated as having a q-value of
  * 1.)
  * <p>
@@ -30,8 +30,6 @@ import net.szvoc.xsip.sip.common.Parametric;
  * @author BEA Systems, NIST
  * @version 1.2
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
 public class AcceptHeader extends Header<AcceptHeader.ContentType> {
     @Override
     public String getName() {

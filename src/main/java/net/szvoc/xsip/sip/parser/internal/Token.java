@@ -3,7 +3,6 @@ package net.szvoc.xsip.sip.parser.internal;
 import lombok.Getter;
 import net.szvoc.xsip.sip.parser.SyntaxException;
 
-
 public abstract class Token {
     @Getter
     private TokenType tokenType;
