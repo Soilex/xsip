@@ -13,9 +13,9 @@ public class AcceptParser extends Parser<AcceptHeader> {
     @Override
     protected AcceptHeader parse(Lexer lexer) throws SyntaxException {
         AcceptHeader header = new AcceptHeader();
-        boolean isFirst = true;
+        boolean once = true;
         while (!lexer.isEndOfLine()) {
-            if (!isFirst && !CharacterType.COMMA.isMatch(lexer.read())) {
+            if (!once && !CharacterType.COMMA.isMatch(lexer.read())) {
                 lexer.throwSyntaxException();
             }
             lexer.skipBlank();
@@ -29,7 +29,6 @@ public class AcceptParser extends Parser<AcceptHeader> {
             AcceptHeader.ContentType contentType = new AcceptHeader.ContentType();
             contentType.setContentType(type);
             contentType.setContentSubType(subType);
-            contentType.setQValue(1f);
             header.add(contentType);
             while (CharacterType.SEMICOLON.isMatch(lexer.look())) {
                 ParameterToken parameterToken = lexer.nextToken(TokenType.PARAMETER);
@@ -45,7 +44,7 @@ public class AcceptParser extends Parser<AcceptHeader> {
                 }
                 lexer.skipBlank();
             }
-            isFirst = false;
+            once = false;
         }
         return header;
     }

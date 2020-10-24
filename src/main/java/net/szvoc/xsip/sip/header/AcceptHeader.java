@@ -38,7 +38,7 @@ public class AcceptHeader extends Header<AcceptHeader.ContentType> {
 
     @Data
     public static class ContentType extends Parametric<String> {
-        private float qValue;
+        private float qValue = 1.0f;
         private String contentType;
         private String contentSubType;
     }
