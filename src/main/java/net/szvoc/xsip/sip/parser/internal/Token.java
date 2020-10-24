@@ -1,4 +1,4 @@
-package net.szvoc.xsip.sip.parser;
+package net.szvoc.xsip.sip.parser.internal;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -20,5 +20,5 @@ public abstract class Token {
         this.lexer = lexer;
     }
 
-    protected abstract void scan();
+    protected abstract void scan() throws SyntaxException;
 }

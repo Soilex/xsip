@@ -5,8 +5,8 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.*;
 
-public abstract class Header {
-    private List<String> values = new ArrayList<>();
+public abstract class Header<T> {
+    private List<T> values = new ArrayList<>();
     private Map<String, Parameter> parameters = new HashMap<>();
 
     public abstract String getName();
@@ -15,12 +15,16 @@ public abstract class Header {
         return !CollectionUtils.isEmpty(values);
     }
 
-    protected String get() {
+    public T get() {
         return containsValue() ? values.get(0) : null;
     }
 
-    protected Iterator<String> getAll() {
+    public Iterator<T> getAll() {
         return values.iterator();
+    }
+
+    public void add(T value) {
+        values.add(value);
     }
 
     public Parameter getParameter(String name) {

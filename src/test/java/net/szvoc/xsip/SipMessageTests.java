@@ -1,13 +1,16 @@
 package net.szvoc.xsip;
 
 import lombok.var;
+import net.szvoc.xsip.sip.parser.Parser;
+import net.szvoc.xsip.sip.parser.internal.Lexer;
+import net.szvoc.xsip.sip.parser.internal.SyntaxException;
 import net.szvoc.xsip.sipbak.core.HeaderFactory;
 import net.szvoc.xsip.sipbak.core.Request;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ProtocolTests {
+class SipMessageTests {
 
     @Test
     void parseRegister() {
