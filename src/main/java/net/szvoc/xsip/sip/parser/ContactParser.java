@@ -15,23 +15,23 @@ public class ContactParser extends Parser<ContactHeader> {
     @Override
     protected ContactHeader parse(Lexer lexer) throws SyntaxException {
         ContactHeader.Contact contact = new ContactHeader.Contact();
-        if (Character.DOUBLEQUOTE.isMatch(lexer.look())) {
-            WordToken nameToken = lexer.skip(1).nextToken(TokenType.WORD);
-            if (!Character.DOUBLEQUOTE.isMatch(lexer.read())) {
-                lexer.throwSyntaxException();
-            }
-            contact.setName(nameToken.getValue().get());
-            lexer.skipBlank();
-        }
-        if (!Character.LESS_THAN.isMatch(lexer.read())) {
-            lexer.throwSyntaxException();
-        }
-        UriToken uriToken = lexer.nextToken(TokenType.URI);
-        if (!Character.GREATER_THAN.isMatch(lexer.read())) {
-            lexer.throwSyntaxException();
-        }
-        contact.setUri(uriToken.getValue().get());
-
+//        if (Character.DOUBLEQUOTE.isMatch(lexer.peek())) {
+//            WordToken nameToken = lexer.skip(1).nextToken(TokenType.WORD);
+//            if (!Character.DOUBLEQUOTE.isMatch(lexer.read())) {
+//                lexer.throwSyntaxException();
+//            }
+//            contact.setName(nameToken.getValue().get());
+//            lexer.skipBlank();
+//        }
+//        if (!Character.LESS_THAN.isMatch(lexer.read())) {
+//            lexer.throwSyntaxException();
+//        }
+//        UriToken uriToken = lexer.nextToken(TokenType.URI);
+//        if (!Character.GREATER_THAN.isMatch(lexer.read())) {
+//            lexer.throwSyntaxException();
+//        }
+//        contact.setUri(uriToken.getValue().get());
+//
         ContactHeader header = new ContactHeader();
         header.add(contact);
         return header;

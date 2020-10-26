@@ -1,7 +1,6 @@
 package net.szvoc.xsip.message;
 
 import lombok.var;
-import net.szvoc.xsip.sipbak.core.Request;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -43,7 +42,7 @@ class InviteTests {
                 "a=rtpmap:101 telephone-event/8000\r\n" +
                 "a=fmtp:101 0-16\r\n" +
                 "a=ssrc:1477579855 cname:66f905605b654260\r\n";
-        var request = Request.parse(null, null, text);
+//        var request = Request.parse(null, null, text);
     }
 
 }

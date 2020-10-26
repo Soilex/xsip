@@ -18,11 +18,10 @@ public abstract class Parser<T> {
     protected abstract T parse(Lexer lexer) throws SyntaxException;
 
     public static <E extends Header> E parser(Lexer lexer, char delimiter) throws SyntaxException {
-        WordToken nameToken = lexer.nextToken(TokenType.WORD);
+        WordToken nameToken = new WordToken(true, lexer);
         if (lexer.read() != delimiter) {
             lexer.throwSyntaxException();
         }
-        lexer.skipBlank();
         return (E) ParserFactory.create(nameToken.getValue().get()).parse(lexer);
     }
 }

@@ -1,24 +1,20 @@
 package net.szvoc.xsip.sip.parser.internal;
 
 import net.szvoc.xsip.sip.parser.SyntaxException;
-import net.szvoc.xsip.sip.parser.annotation.BindingTokenType;
 
 import java.math.BigDecimal;
 
-@BindingTokenType(TokenType.NUMERIC)
 public class NumericToken extends Token<BigDecimal> {
     public NumericToken(boolean required, Lexer lexer) {
         super(required, lexer);
     }
 
     @Override
-    public void scan() throws SyntaxException {
-        super.scan();
-
+    protected void doScan() throws SyntaxException {
         StringBuilder stringBuilder = new StringBuilder();
         boolean dot = false;
         while (!lexer.isEOF()) {
-            char ch = lexer.look();
+            char ch = lexer.peek();
             if (Character.DOT.isMatch(ch)) {
                 if (dot) { // 小数点只能出现一次
                     break;

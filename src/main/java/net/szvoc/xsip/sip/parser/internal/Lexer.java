@@ -2,10 +2,12 @@ package net.szvoc.xsip.sip.parser.internal;
 
 import net.szvoc.xsip.sip.parser.SyntaxException;
 
+import java.util.Stack;
+
 public class Lexer {
     private String source;
     private int position = 0;
-    private int index = 0;
+    private Stack<Integer> markers = new Stack<>();
 
     private static final char CR = '\r';
     private static final char LF = '\n';
@@ -14,7 +16,7 @@ public class Lexer {
         this.source = source;
     }
 
-    public java.lang.Character look() {
+    public java.lang.Character peek() {
         if (isEOF()) {
             return null;
         }
@@ -29,12 +31,12 @@ public class Lexer {
     }
 
     public Lexer markIndex() {
-        index = position;
+        markers.push(position);
         return this;
     }
 
     public Lexer resetIndex() {
-        position = index;
+        position = markers.pop();
         return this;
     }
 
@@ -48,12 +50,6 @@ public class Lexer {
         return this;
     }
 
-    public <T extends Token> T nextToken(TokenType tokenType) throws SyntaxException {
-        Token token = TokenFactory.create(tokenType, this);
-        token.scan();
-        return (T) token;
-    }
-
     public Lexer skipBlank() {
         while (!isEOF()) {
             char ch = source.charAt(position);
@@ -65,7 +61,7 @@ public class Lexer {
         return this;
     }
 
-    public boolean isEndOfLine() {
+    public boolean isEOL() {
         if (isEOF()) {
             return true;
         }

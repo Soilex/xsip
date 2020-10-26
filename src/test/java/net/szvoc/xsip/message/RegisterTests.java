@@ -1,7 +1,6 @@
 package net.szvoc.xsip.message;
 
 import lombok.var;
-import net.szvoc.xsip.sipbak.core.Request;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -22,7 +21,7 @@ class RegisterTests {
                 "Expires: 300\r\n" +
                 "Allow: PRACK, INVITE, ACK, BYE, CANCEL, UPDATE, INFO, SUBSCRIBE, NOTIFY, REFER, MESSAGE, OPTIONS\r\n" +
                 "Content-Length:  0\r\n\r\n";
-        var request = Request.parse(null, null, text);
+//        var request = Request.parse(null, null, text);
     }
 
 }
