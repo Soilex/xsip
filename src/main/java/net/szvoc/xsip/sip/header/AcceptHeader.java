@@ -1,7 +1,7 @@
 package net.szvoc.xsip.sip.header;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import net.szvoc.xsip.sip.common.Parametric;
 
 /**
@@ -36,11 +36,21 @@ public class AcceptHeader extends Header<AcceptHeader.ContentType> {
         return HeaderName.ACCEPT;
     }
 
-    @Data
-    @EqualsAndHashCode(callSuper = true)
     public static class ContentType extends Parametric<String> {
+        private static final String Q_VALUE = "q-value";
+
         private float qValue = 1.0f;
+
+        @Getter
+        @Setter
         private String contentType;
+
+        @Getter
+        @Setter
         private String contentSubType;
+
+        public float getQValue() {
+            return this.getParameter(Q_VALUE).getFloat();
+        }
     }
 }

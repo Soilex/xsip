@@ -5,6 +5,7 @@ import net.szvoc.xsip.sip.parser.SyntaxException;
 public class Lexer {
     private String source;
     private int position = 0;
+    private int index = 0;
 
     private static final char CR = '\r';
     private static final char LF = '\n';
@@ -13,18 +14,28 @@ public class Lexer {
         this.source = source;
     }
 
-    public Character look() {
+    public java.lang.Character look() {
         if (isEOF()) {
             return null;
         }
         return source.charAt(position);
     }
 
-    public Character read() {
+    public java.lang.Character read() {
         if (isEOF()) {
             return null;
         }
         return source.charAt(position++);
+    }
+
+    public Lexer markIndex() {
+        index = position;
+        return this;
+    }
+
+    public Lexer resetIndex() {
+        position = index;
+        return this;
     }
 
     public Lexer skip(int offset) {
@@ -46,7 +57,7 @@ public class Lexer {
     public Lexer skipBlank() {
         while (!isEOF()) {
             char ch = source.charAt(position);
-            if (!CharacterType.BLANK.isMatch(ch)) {
+            if (!Character.BLANK.isMatch(ch)) {
                 break;
             }
             position++;

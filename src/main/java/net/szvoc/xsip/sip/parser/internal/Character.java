@@ -4,10 +4,10 @@ import lombok.Getter;
 
 import java.util.Arrays;
 
-public enum CharacterType {
+public enum Character {
     BACKSLASH((int) '\\'),
     QUOTE((int) '\''),
-    AT((int) '@'),
+    ALT((int) '@'),
     SP((int) ' '),
     TAB((int) '\t'),
     COLON((int) ':'),
@@ -48,11 +48,11 @@ public enum CharacterType {
     @Getter
     private int code;
 
-    CharacterType(int code) {
+    Character(int code) {
         this.code = code;
     }
 
-    public boolean isMatch(Character ch) {
+    public boolean isMatch(java.lang.Character ch) {
         if (ch == null) {
             return false;
         }
@@ -68,10 +68,10 @@ public enum CharacterType {
         }
     }
 
-    public static boolean isMatch(Character ch, CharacterType... characterTypes) {
-        if (ch == null || characterTypes == null || characterTypes.length == 0) {
+    public static boolean isMatch(java.lang.Character ch, Character... characters) {
+        if (ch == null || characters == null || characters.length == 0) {
             return false;
         }
-        return Arrays.stream(characterTypes).anyMatch(characterType -> characterType.isMatch(ch));
+        return Arrays.stream(characters).anyMatch(characterType -> characterType.isMatch(ch));
     }
 }

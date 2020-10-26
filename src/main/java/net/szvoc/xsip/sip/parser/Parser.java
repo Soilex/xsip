@@ -23,6 +23,6 @@ public abstract class Parser<T> {
             lexer.throwSyntaxException();
         }
         lexer.skipBlank();
-        return (E) ParserFactory.create(nameToken.getValue()).parse(lexer);
+        return (E) ParserFactory.create(nameToken.getValue().get()).parse(lexer);
     }
 }

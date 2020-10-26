@@ -3,7 +3,6 @@ package net.szvoc.xsip.token;
 import net.szvoc.xsip.sip.common.URI;
 import net.szvoc.xsip.sip.parser.SyntaxException;
 import net.szvoc.xsip.sip.parser.internal.Lexer;
-import net.szvoc.xsip.sip.parser.internal.TokenType;
 import net.szvoc.xsip.sip.parser.internal.UriToken;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.commons.util.StringUtils;
@@ -14,8 +13,9 @@ class UriTests {
 
     @Test
     void parse() throws SyntaxException {
-        UriToken token = new Lexer("sip:1001@127.0.0.1:61917").nextToken(TokenType.URI);
-        URI uri = token.getValue();
+        UriToken token = new UriToken(true, new Lexer("sip:1001@127.0.0.1:61917"));
+        token.scan();
+        URI uri = token.getValue().get();
         assert uri.getSchema().equals("sip");
         assert uri.getUser().equals("1001");
         assert uri.getHost().equals("127.0.0.1");
@@ -24,8 +24,9 @@ class UriTests {
 
     @Test
     void parseWithParameters() throws SyntaxException {
-        UriToken token = new Lexer("sip:1001@127.0.0.1:61917;ob;received=192.168.1.1\r\n").nextToken(TokenType.URI);
-        URI uri = token.getValue();
+        UriToken token = new UriToken(true, new Lexer("sip:1001@127.0.0.1:61917;ob;received=192.168.1.1\r\n"));
+        token.scan();
+        URI uri = token.getValue().get();
         assert uri.getSchema().equals("sip");
         assert uri.getUser().equals("1001");
         assert uri.getHost().equals("127.0.0.1");
@@ -36,8 +37,9 @@ class UriTests {
 
     @Test
     void parseNoUser() throws SyntaxException {
-        UriToken token = new Lexer("sip:127.0.0.1:61917").nextToken(TokenType.URI);
-        URI uri = token.getValue();
+        UriToken token = new UriToken(true, new Lexer("sip:127.0.0.1:61917"));
+        token.scan();
+        URI uri = token.getValue().get();
         assert uri.getSchema().equals("sip");
         assert StringUtils.isBlank(uri.getUser());
         assert uri.getHost().equals("127.0.0.1");
@@ -46,8 +48,9 @@ class UriTests {
 
     @Test
     void parseNoUserAndPort() throws SyntaxException {
-        UriToken token = new Lexer("sip:cc.szvoc.net").nextToken(TokenType.URI);
-        URI uri = token.getValue();
+        UriToken token = new UriToken(true, new Lexer("sip:cc.szvoc.net"));
+        token.scan();
+        URI uri = token.getValue().get();
         assert uri.getSchema().equals("sip");
         assert StringUtils.isBlank(uri.getUser());
         assert uri.getHost().equals("cc.szvoc.net");

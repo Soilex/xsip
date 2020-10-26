@@ -11,6 +11,10 @@ public class Parametric<T> {
         return parameters.getOrDefault(name, null);
     }
 
+    public void setParameter(Parameter parameter) {
+        parameters.put(parameter.getName(), parameter);
+    }
+
     public void setParameter(String name, String value) {
         Parameter parameter = new Parameter();
         parameter.setName(name);

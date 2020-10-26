@@ -1,33 +1,30 @@
 package net.szvoc.xsip.sip.parser.internal;
 
-import lombok.Getter;
+import net.szvoc.xsip.sip.common.Parameter;
 import net.szvoc.xsip.sip.parser.SyntaxException;
 import net.szvoc.xsip.sip.parser.annotation.BindingTokenType;
 
 @BindingTokenType(TokenType.PARAMETER)
-public class ParameterToken extends Token {
-    @Getter
-    private String parameterName;
-
-    @Getter
-    private String parameterValue;
-
-    protected ParameterToken(Lexer lexer) {
-        super(TokenType.PARAMETER, lexer);
+public class ParameterToken extends Token<Parameter> {
+    protected ParameterToken(boolean required, Lexer lexer) {
+        super(required, lexer);
     }
 
     @Override
-    protected void scan() throws SyntaxException {
-        if (CharacterType.SEMICOLON.isMatch(lexer.read())) {
-            WordToken parameterNameToken = lexer.nextToken(TokenType.WORD);
-            parameterName = parameterNameToken.getValue();
-            if (CharacterType.EQUALS.isMatch(lexer.look())) {
-                lexer.skip(1);
-                WordToken parameterValueToken = lexer.nextToken(TokenType.WORD);
-                parameterValue = parameterValueToken.getValue();
-            }
-        } else {
+    public void scan() throws SyntaxException {
+        super.scan();
+
+        if (!Character.SEMICOLON.isMatch(lexer.read())) {
             lexer.throwSyntaxException();
         }
+        WordToken parameterNameToken = lexer.nextToken(TokenType.WORD);
+        Parameter parameter = new Parameter();
+        parameter.setName(parameterNameToken.getValue().get());
+        if (Character.EQUALS.isMatch(lexer.look())) {
+            lexer.skip(1);
+            WordToken parameterValueToken = lexer.nextToken(TokenType.WORD);
+            parameter.setValue(parameterValueToken.getValue().get());
+        }
+        this.setValue(parameter);
     }
 }

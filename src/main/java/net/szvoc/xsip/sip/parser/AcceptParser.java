@@ -4,11 +4,10 @@ import net.szvoc.xsip.sip.header.AcceptHeader;
 import net.szvoc.xsip.sip.header.HeaderName;
 import net.szvoc.xsip.sip.parser.annotation.BindingHeaderName;
 import net.szvoc.xsip.sip.parser.internal.*;
+import net.szvoc.xsip.sip.parser.internal.Character;
 
 @BindingHeaderName(HeaderName.ACCEPT)
 public class AcceptParser extends Parser<AcceptHeader> {
-    private static final String Q_VALUE = "q-value";
-
     public AcceptParser() {
         super(DELIMITER_COLON);
     }
@@ -18,33 +17,24 @@ public class AcceptParser extends Parser<AcceptHeader> {
         AcceptHeader header = new AcceptHeader();
         boolean once = true;
         while (!lexer.isEndOfLine()) {
-            if (!once && !CharacterType.COMMA.isMatch(lexer.read())) {
+            if (!once && !Character.COMMA.isMatch(lexer.read())) {
                 lexer.throwSyntaxException();
             }
             lexer.skipBlank();
             WordToken typeToken = lexer.nextToken(TokenType.WORD);
-            String type = typeToken.getValue();
-            if (!CharacterType.SLASH.isMatch(lexer.read())) {
+            String type = typeToken.getValue().get();
+            if (!Character.SLASH.isMatch(lexer.read())) {
                 lexer.throwSyntaxException();
             }
             WordToken subTypeToken = lexer.nextToken(TokenType.WORD);
-            String subType = subTypeToken.getValue();
+            String subType = subTypeToken.getValue().get();
             AcceptHeader.ContentType contentType = new AcceptHeader.ContentType();
             contentType.setContentType(type);
             contentType.setContentSubType(subType);
             header.add(contentType);
-            while (CharacterType.SEMICOLON.isMatch(lexer.look())) {
+            while (Character.SEMICOLON.isMatch(lexer.look())) {
                 ParameterToken parameterToken = lexer.nextToken(TokenType.PARAMETER);
-                if (parameterToken.getParameterName().equals(Q_VALUE)) {
-                    try {
-                        float qValue = Float.parseFloat(parameterToken.getParameterValue());
-                        contentType.setQValue(qValue);
-                    } catch (NumberFormatException ignore) {
-                        lexer.throwSyntaxException();
-                    }
-                } else {
-                    contentType.setParameter(parameterToken.getParameterName(), parameterToken.getParameterValue());
-                }
+                contentType.setParameter(parameterToken.getValue().get());
                 lexer.skipBlank();
             }
             once = false;

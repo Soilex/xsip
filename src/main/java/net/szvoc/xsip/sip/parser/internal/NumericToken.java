@@ -3,33 +3,23 @@ package net.szvoc.xsip.sip.parser.internal;
 import net.szvoc.xsip.sip.parser.SyntaxException;
 import net.szvoc.xsip.sip.parser.annotation.BindingTokenType;
 
+import java.math.BigDecimal;
+
 @BindingTokenType(TokenType.NUMERIC)
-public class NumericToken extends Token {
-    private String value;
-
-    public NumericToken(Lexer lexer) {
-        super(TokenType.NUMERIC, lexer);
-    }
-
-    public int getIn32() {
-        return Integer.parseInt(value);
-    }
-
-    public long getInt64() {
-        return Long.parseLong(value);
-    }
-
-    public float getFloat() {
-        return Float.parseFloat(value);
+public class NumericToken extends Token<BigDecimal> {
+    public NumericToken(boolean required, Lexer lexer) {
+        super(required, lexer);
     }
 
     @Override
-    protected void scan() throws SyntaxException {
+    public void scan() throws SyntaxException {
+        super.scan();
+
         StringBuilder stringBuilder = new StringBuilder();
         boolean dot = false;
         while (!lexer.isEOF()) {
             char ch = lexer.look();
-            if (CharacterType.DOT.isMatch(ch)) {
+            if (Character.DOT.isMatch(ch)) {
                 if (dot) { // 小数点只能出现一次
                     break;
                 } else {
@@ -37,16 +27,13 @@ public class NumericToken extends Token {
                     stringBuilder.append(ch);
                     lexer.skip(1);
                 }
-            } else if (CharacterType.DIGIT.isMatch(ch)) {
+            } else if (Character.DIGIT.isMatch(ch)) {
                 stringBuilder.append(ch);
                 lexer.skip(1);
             } else {
                 break;
             }
         }
-        if (stringBuilder.length() == 0 || stringBuilder.equals(".")) {
-            lexer.throwSyntaxException();
-        }
-        this.value = stringBuilder.toString();
+        this.setValue(stringBuilder.length() == 0 || stringBuilder.equals(".") ? null : new BigDecimal(stringBuilder.toString()));
     }
 }

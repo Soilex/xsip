@@ -1,33 +1,28 @@
 package net.szvoc.xsip.sip.parser.internal;
 
-import lombok.Getter;
 import net.szvoc.xsip.sip.parser.SyntaxException;
 import net.szvoc.xsip.sip.parser.annotation.BindingTokenType;
 
 @BindingTokenType(TokenType.WORD)
-public class WordToken extends Token {
-    @Getter
-    private String value;
-
-    public WordToken(Lexer lexer) {
-        super(TokenType.WORD, lexer);
+public class WordToken extends Token<String> {
+    public WordToken( boolean required, Lexer lexer) {
+        super(required, lexer);
     }
 
     @Override
-    protected void scan() throws SyntaxException {
+    public void scan() throws SyntaxException {
+        super.scan();
+
         StringBuilder stringBuilder = new StringBuilder();
         while (!lexer.isEOF()) {
             char ch = lexer.read();
-            if (CharacterType.isMatch(ch, CharacterType.ALPHA, CharacterType.DIGIT, CharacterType.MINUS, CharacterType.UNDERSCORE, CharacterType.DOT)) {
+            if (Character.isMatch(ch, Character.ALPHA, Character.DIGIT, Character.MINUS, Character.UNDERSCORE, Character.DOT)) {
                 stringBuilder.append(ch);
             } else {
                 lexer.back();
                 break;
             }
         }
-        if (stringBuilder.length() == 0) {
-            lexer.throwSyntaxException();
-        }
-        this.value = stringBuilder.toString();
+        this.setValue(stringBuilder.toString());
     }
 }
