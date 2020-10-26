@@ -1,79 +1,68 @@
 package net.szvoc.xsip.sip.parser.internal;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import com.google.common.base.Strings;
 import net.szvoc.xsip.sip.parser.SyntaxException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
+import java.util.Map;
+import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
-public abstract class ComplexToken<T> extends Token<T> {
-    private Holder<T> tokenValueHolder = new Holder<>();
-    private List<TokenFuture> futures = new ArrayList<>();
+public abstract class ComplexToken extends Token<Map<String, ?>> {
+    private final List<Token<?>> tokens = new ArrayList<>();
 
-    protected T defaultValue() {
-        return null;
+    public ComplexToken(String id, boolean required, Lexer lexer, Consumer<Map<String, ?>> matchHandler) {
+        super(id, required, lexer, matchHandler);
     }
 
-    ;
+    public ComplexToken(boolean required, Lexer lexer, Consumer<Map<String, ?>> matchHandler) {
+        super(required, lexer, matchHandler);
+    }
+
+    public ComplexToken(String id, boolean required, Lexer lexer) {
+        super(id, required, lexer);
+    }
 
     public ComplexToken(boolean required, Lexer lexer) {
         super(required, lexer);
     }
 
-    protected <E extends Token> CompletableFuture<E> rule(E subToken) {
-        CompletableFuture<E> future = new CompletableFuture<>();
-        futures.add(new TokenFuture(subToken, future));
-        return future;
+    protected <T> void rule(Token<T> token) {
+        tokens.add(token);
     }
 
-    protected abstract void rules(final Holder<T> tokenValueHolder);
+    protected abstract void rules();
 
     @Override
-    public void scan() throws SyntaxException {
-        this.tokenValueHolder.setValue(defaultValue());
-        this.rules(this.tokenValueHolder);
-        super.scan();
-        this.setValue(this.tokenValueHolder.getValue(), false);
+    protected void match(boolean handle) throws SyntaxException {
+        this.rules();
+        super.match(handle);
     }
 
     @Override
-    protected void doScan() throws SyntaxException {
+    protected void doMatch() throws SyntaxException {
         lexer.markIndex();
 
-        List<Runnable> callbacks = new ArrayList<>();
-        for (TokenFuture tf : futures) {
-            Token token = tf.getToken();
-            CompletableFuture<Token> future = tf.getFuture();
+        List<Token<?>> matches = new ArrayList<>();
+        for (Token<?> token : tokens) {
             try {
-                token.scan();
-                callbacks.add(() -> future.complete(token));
+                token.match(false);
+                matches.add(token);
             } catch (SyntaxException ex) {
                 if (this.isRequired()) {
-                    future.completeExceptionally(ex);
                     throw ex;
                 } else {
+                    matches.clear();
                     lexer.resetIndex();
                     return;
                 }
             }
         }
-        callbacks.forEach(Runnable::run);
-    }
-
-    @Data
-    @AllArgsConstructor
-    private static class TokenFuture<E extends Token> {
-        private E token;
-        private CompletableFuture<E> future;
-    }
-
-    @Getter
-    @Setter
-    static class Holder<T> {
-        private T value;
+        Map<String, ?> tokensValue = this.tokens.stream()
+                .filter(p -> !Strings.isNullOrEmpty(p.getId()))
+                .collect(Collectors.toMap(p -> p.getId(), p -> p.getValue()));
+        this.setValue(tokensValue);
+        matches.forEach(c -> c.invokeHandler());
     }
 }

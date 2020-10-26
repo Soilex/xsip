@@ -16,7 +16,7 @@ class AcceptTests {
     @Test
     void parse() throws SyntaxException {
         String text = "Accept: application/sdp;q-value=0.5;level=1, application/x-private;q-value=0.3, text/html\r\n";
-        AcceptHeader header = Parser.parser(new Lexer(text), Parser.DELIMITER_COLON);
+        AcceptHeader header = Parser.parse(new Lexer(text), Parser.DELIMITER_COLON);
         assert header.getName().equals("Accept");
 
         Iterator<AcceptHeader.ContentType> iterator = header.iterator();
