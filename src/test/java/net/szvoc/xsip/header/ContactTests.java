@@ -3,7 +3,7 @@ package net.szvoc.xsip.header;
 import net.szvoc.xsip.sip.header.ContactHeader;
 import net.szvoc.xsip.sip.parser.Parser;
 import net.szvoc.xsip.sip.parser.SyntaxException;
-import net.szvoc.xsip.sip.parser.internal.Lexer;
+import net.szvoc.xsip.sip.parser.internal.StringBuffer;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.commons.util.StringUtils;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,7 +14,7 @@ class ContactTests {
     @Test
     void parse() throws SyntaxException {
         String text = "Contact: \"sonic\" <sip:1001@127.0.0.1:61917;ob;received=192.168.1.2>";
-        ContactHeader header = Parser.parse(new Lexer(text), Parser.DELIMITER_COLON);
+        ContactHeader header = Parser.parse(new StringBuffer(text));
         assert header.getName().equals("Contact");
 
         ContactHeader.Contact contact = header.get();

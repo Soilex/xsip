@@ -8,33 +8,31 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public class ParametersToken extends Token<List<Parameter>> {
-    public ParametersToken(String id, boolean required, Lexer lexer, Consumer<List<Parameter>> matchHandler) {
+    public ParametersToken(String id, boolean required, StringBuffer lexer, Consumer<List<Parameter>> matchHandler) {
         super(id, required, lexer, matchHandler);
     }
 
-    public ParametersToken(boolean required, Lexer lexer, Consumer<List<Parameter>> matchHandler) {
+    public ParametersToken(boolean required, StringBuffer lexer, Consumer<List<Parameter>> matchHandler) {
         super(required, lexer, matchHandler);
     }
 
-    public ParametersToken(String id, boolean required, Lexer lexer) {
+    public ParametersToken(String id, boolean required, StringBuffer lexer) {
         super(id, required, lexer);
     }
 
-    public ParametersToken(boolean required, Lexer lexer) {
+    public ParametersToken(boolean required, StringBuffer lexer) {
         super(required, lexer);
     }
 
     @Override
-    protected void doMatch() throws SyntaxException {
+    protected boolean doMatch() throws SyntaxException {
         List<Parameter> parameters = new ArrayList<>();
-        while (Character.SEMICOLON.isMatch(lexer.read())) {
-            lexer.skipBlank();
+        while (lexer.read(CharacterType.SEMICOLON) != null) {
             WordToken nameToken = new WordToken(true, lexer);
             nameToken.match();
             Parameter parameter = new Parameter();
             parameter.setName(nameToken.getValue());
-            if (Character.EQUALS.isMatch(lexer.peek())) {
-                lexer.skip(1);
+            if (lexer.read(CharacterType.EQUALS) != null) {
                 WordToken valueToken = new WordToken(true, lexer);
                 valueToken.match();
                 parameter.setValue(valueToken.getValue());
@@ -42,5 +40,6 @@ public class ParametersToken extends Token<List<Parameter>> {
             parameters.add(parameter);
         }
         this.setValue(parameters);
+        return parameters.size() > 1;
     }
 }

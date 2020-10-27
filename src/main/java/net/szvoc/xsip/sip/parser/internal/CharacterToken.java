@@ -5,24 +5,21 @@ import net.szvoc.xsip.sip.parser.SyntaxException;
 import java.util.function.Consumer;
 
 public class CharacterToken extends Token<Character> {
-    private Character character;
+    private CharacterType characterType;
 
-    public CharacterToken(Character character, boolean required, Lexer lexer, Consumer<Character> matchHandler) {
+    public CharacterToken(CharacterType character, boolean required, StringBuffer lexer, Consumer<Character> matchHandler) {
         super(required, lexer, matchHandler);
-        this.character = character;
+        this.characterType = character;
     }
 
-    public CharacterToken(Character character, boolean required, Lexer lexer) {
+    public CharacterToken(CharacterType character, boolean required, StringBuffer lexer) {
         this(character, required, lexer, null);
     }
 
     @Override
-    protected void doMatch() throws SyntaxException {
-        if (!character.isMatch(lexer.peek())) {
-            this.setValue(null);
-        } else {
-            lexer.skip(1);
-            this.setValue(character);
-        }
+    protected boolean doMatch() throws SyntaxException {
+        Character ch = lexer.read(this.characterType);
+        this.setValue(ch);
+        return ch != null;
     }
 }

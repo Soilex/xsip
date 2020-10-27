@@ -2,7 +2,7 @@ package net.szvoc.xsip.token;
 
 import net.szvoc.xsip.sip.common.URI;
 import net.szvoc.xsip.sip.parser.SyntaxException;
-import net.szvoc.xsip.sip.parser.internal.Lexer;
+import net.szvoc.xsip.sip.parser.internal.StringBuffer;
 import net.szvoc.xsip.sip.parser.internal.UriToken;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.commons.util.StringUtils;
@@ -13,7 +13,7 @@ class UriTests {
 
     @Test
     void parse() throws SyntaxException {
-        UriToken token = new UriToken(true, new Lexer("sip:1001@127.0.0.1:61917"));
+        UriToken token = new UriToken(true, new StringBuffer("sip:1001@127.0.0.1:61917"));
         token.match();
         URI uri = token.getValue();
         assert uri.getSchema().equals("sip");
@@ -24,7 +24,7 @@ class UriTests {
 
     @Test
     void parseWithParameters() throws SyntaxException {
-        UriToken token = new UriToken(true, new Lexer("sip:1001@127.0.0.1:61917;ob;received=192.168.1.1\r\n"));
+        UriToken token = new UriToken(true, new StringBuffer("sip:1001@127.0.0.1:61917;ob;received=192.168.1.1\r\n"));
         token.match();
         URI uri = token.getValue();
         assert uri.getSchema().equals("sip");
@@ -37,7 +37,7 @@ class UriTests {
 
     @Test
     void parseNoUser() throws SyntaxException {
-        UriToken token = new UriToken(true, new Lexer("sip:127.0.0.1:61917"));
+        UriToken token = new UriToken(true, new StringBuffer("sip:127.0.0.1:61917"));
         token.match();
         URI uri = token.getValue();
         assert uri.getSchema().equals("sip");
@@ -48,7 +48,7 @@ class UriTests {
 
     @Test
     void parseNoUserAndPort() throws SyntaxException {
-        UriToken token = new UriToken(true, new Lexer("sip:cc.szvoc.net"));
+        UriToken token = new UriToken(true, new StringBuffer("sip:cc.szvoc.net"));
         token.match();
         URI uri = token.getValue();
         assert uri.getSchema().equals("sip");

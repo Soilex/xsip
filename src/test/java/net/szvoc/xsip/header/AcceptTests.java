@@ -3,7 +3,7 @@ package net.szvoc.xsip.header;
 import net.szvoc.xsip.sip.header.AcceptHeader;
 import net.szvoc.xsip.sip.parser.Parser;
 import net.szvoc.xsip.sip.parser.SyntaxException;
-import net.szvoc.xsip.sip.parser.internal.Lexer;
+import net.szvoc.xsip.sip.parser.internal.StringBuffer;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -16,7 +16,7 @@ class AcceptTests {
     @Test
     void parse() throws SyntaxException {
         String text = "Accept: application/sdp;q-value=0.5;level=1, application/x-private;q-value=0.3, text/html\r\n";
-        AcceptHeader header = Parser.parse(new Lexer(text), Parser.DELIMITER_COLON);
+        AcceptHeader header = Parser.parse(new StringBuffer(text));
         assert header.getName().equals("Accept");
 
         Iterator<AcceptHeader.ContentType> iterator = header.iterator();

@@ -2,58 +2,41 @@ package net.szvoc.xsip.sip.parser.internal;
 
 import net.szvoc.xsip.sip.parser.SyntaxException;
 
-import java.util.Stack;
-
-public class Lexer {
-    private String source;
+public class StringBuffer {
     private int position = 0;
-    private Stack<Integer> markers = new Stack<>();
+    private String source;
 
     private static final char CR = '\r';
     private static final char LF = '\n';
 
-    public Lexer(String source) {
+    public StringBuffer(String source) {
         this.source = source;
     }
 
-    public java.lang.Character peek() {
+    public Character read(CharacterType... expects) {
         if (isEOF()) {
             return null;
         }
-        return source.charAt(position);
-    }
-
-    public java.lang.Character read() {
-        if (isEOF()) {
+        Character ch = source.charAt(position++);
+        if (expects != null && expects.length > 0 && !CharacterType.isMatch(ch, expects)) {
+            position--;
             return null;
         }
-        return source.charAt(position++);
+        return ch;
     }
 
-    public Lexer markIndex() {
-        markers.push(position);
-        return this;
+    public int position() {
+        return position;
     }
 
-    public Lexer resetIndex() {
-        position = markers.pop();
-        return this;
+    public int position(int value) {
+        return position = value;
     }
 
-    public Lexer skip(int offset) {
-        position += offset;
-        return this;
-    }
-
-    public Lexer back() {
-        position--;
-        return this;
-    }
-
-    public Lexer skipBlank() {
+    public StringBuffer skipBlank() {
         while (!isEOF()) {
             char ch = source.charAt(position);
-            if (!Character.BLANK.isMatch(ch)) {
+            if (!CharacterType.BLANK.isMatch(ch)) {
                 break;
             }
             position++;

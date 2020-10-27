@@ -12,19 +12,19 @@ import java.util.stream.Collectors;
 public abstract class ComplexToken extends Token<Map<String, ?>> {
     private final List<Token<?>> tokens = new ArrayList<>();
 
-    public ComplexToken(String id, boolean required, Lexer lexer, Consumer<Map<String, ?>> matchHandler) {
+    public ComplexToken(String id, boolean required, StringBuffer lexer, Consumer<Map<String, ?>> matchHandler) {
         super(id, required, lexer, matchHandler);
     }
 
-    public ComplexToken(boolean required, Lexer lexer, Consumer<Map<String, ?>> matchHandler) {
+    public ComplexToken(boolean required, StringBuffer lexer, Consumer<Map<String, ?>> matchHandler) {
         super(required, lexer, matchHandler);
     }
 
-    public ComplexToken(String id, boolean required, Lexer lexer) {
+    public ComplexToken(String id, boolean required, StringBuffer lexer) {
         super(id, required, lexer);
     }
 
-    public ComplexToken(boolean required, Lexer lexer) {
+    public ComplexToken(boolean required, StringBuffer lexer) {
         super(required, lexer);
     }
 
@@ -41,9 +41,7 @@ public abstract class ComplexToken extends Token<Map<String, ?>> {
     }
 
     @Override
-    protected void doMatch() throws SyntaxException {
-        lexer.markIndex();
-
+    protected boolean doMatch() throws SyntaxException {
         List<Token<?>> matches = new ArrayList<>();
         for (Token<?> token : tokens) {
             try {
@@ -54,8 +52,7 @@ public abstract class ComplexToken extends Token<Map<String, ?>> {
                     throw ex;
                 } else {
                     matches.clear();
-                    lexer.resetIndex();
-                    return;
+                    return false;
                 }
             }
         }
@@ -64,5 +61,6 @@ public abstract class ComplexToken extends Token<Map<String, ?>> {
                 .collect(Collectors.toMap(p -> p.getId(), p -> p.getValue()));
         this.setValue(tokensValue);
         matches.forEach(c -> c.invokeHandler());
+        return matches.size() > 0;
     }
 }
