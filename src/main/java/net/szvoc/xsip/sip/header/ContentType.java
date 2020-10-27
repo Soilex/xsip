@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import net.szvoc.xsip.sip.common.Parametric;
 
-public class ContentType extends Parametric<String> implements HeaderEntity {
+public class ContentType extends Parametric<String> {
     private static final String Q_VALUE = "q-value";
     private static final float DEFAULT_Q_VALUE = 1f;
 

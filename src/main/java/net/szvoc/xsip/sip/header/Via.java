@@ -6,7 +6,7 @@ import net.szvoc.xsip.sip.common.Parametric;
 import net.szvoc.xsip.sip.common.Protocol;
 import net.szvoc.xsip.sip.common.Transport;
 
-public class Via extends Parametric<String> implements HeaderEntity {
+public class Via extends Parametric<String> {
     private static final String BRANCH = "branch";
 
     @Getter

@@ -22,4 +22,17 @@ public class ToTests {
         assert contact.getUri().getHost().equals("szvoc.net");
         assert contact.getUri().getPort() == 0;
     }
+
+    @Test
+    void parseWithoutName() throws SyntaxException {
+        String text = "To: <sip:1001@szvoc.net>";
+        Header<Contact> header = Parser.parse(new Lexer(text));
+        Contact contact = header.get();
+        assert header.getName().equals("To");
+        assert contact.getName() == null;
+        assert contact.getUri().getSchema().equals("sip");
+        assert contact.getUri().getUser().equals("1001");
+        assert contact.getUri().getHost().equals("szvoc.net");
+        assert contact.getUri().getPort() == 0;
+    }
 }

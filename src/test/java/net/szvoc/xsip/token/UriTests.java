@@ -36,7 +36,7 @@ class UriTests {
     }
 
     @Test
-    void parseNoUser() throws SyntaxException {
+    void parseWithoutUser() throws SyntaxException {
         UriToken token = new UriToken(true, new Lexer("sip:127.0.0.1:61917"));
         token.match();
         URI uri = token.getValue();
@@ -47,7 +47,7 @@ class UriTests {
     }
 
     @Test
-    void parseNoUserAndPort() throws SyntaxException {
+    void parseWithoutUserAndPort() throws SyntaxException {
         UriToken token = new UriToken(true, new Lexer("sip:cc.szvoc.net"));
         token.match();
         URI uri = token.getValue();

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class Header<T extends HeaderEntity> {
+public class Header<T> {
     private List<T> values = new ArrayList<>();
 
     @Getter
