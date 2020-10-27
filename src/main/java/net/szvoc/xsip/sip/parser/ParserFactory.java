@@ -1,9 +1,10 @@
 package net.szvoc.xsip.sip.parser;
 
-import net.szvoc.xsip.sip.parser.annotation.BindingHeaderName;
+import net.szvoc.xsip.sip.parser.annotation.BindingHeader;
 import org.reflections.Reflections;
 
 import java.lang.reflect.Constructor;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -16,8 +17,8 @@ public final class ParserFactory {
         Constructor<? extends Parser> ctor = constructors.computeIfAbsent(headerName, k -> {
             Class<? extends Parser> type = subTypes.stream()
                     .filter(c -> {
-                        BindingHeaderName annotation = c.getAnnotation(BindingHeaderName.class);
-                        return annotation != null && annotation.value().equals(k);
+                        BindingHeader annotation = c.getAnnotation(BindingHeader.class);
+                        return annotation != null && Arrays.stream(annotation.value()).anyMatch(p -> p.equals(k));
                     })
                     .findAny()
                     .orElse(null);

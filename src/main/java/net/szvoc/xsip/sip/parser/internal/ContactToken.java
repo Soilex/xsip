@@ -1,8 +1,7 @@
 package net.szvoc.xsip.sip.parser.internal;
 
 import net.szvoc.xsip.sip.common.CharacterType;
-import net.szvoc.xsip.sip.common.Contact;
-import net.szvoc.xsip.sip.common.URI;
+import net.szvoc.xsip.sip.header.Contact;
 import net.szvoc.xsip.sip.parser.SyntaxException;
 
 import java.util.function.Consumer;

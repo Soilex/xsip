@@ -1,15 +1,21 @@
 package net.szvoc.xsip.sip.header;
 
+import lombok.Getter;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public abstract class Header<T> {
+public class Header<T extends HeaderEntity> {
     private List<T> values = new ArrayList<>();
 
-    public abstract String getName();
+    @Getter
+    private String name;
+
+    public Header(String name) {
+        this.name = name;
+    }
 
     public boolean containsValue() {
         return !CollectionUtils.isEmpty(values);

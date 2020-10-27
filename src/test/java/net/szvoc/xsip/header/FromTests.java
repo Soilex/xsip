@@ -6,24 +6,21 @@ import net.szvoc.xsip.sip.parser.Parser;
 import net.szvoc.xsip.sip.parser.SyntaxException;
 import net.szvoc.xsip.sip.parser.internal.Lexer;
 import org.junit.jupiter.api.Test;
-import org.junit.platform.commons.util.StringUtils;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ContactTests {
+public class FromTests {
     @Test
     void parse() throws SyntaxException {
-        String text = "Contact: \"sonic\" <sip:1001@127.0.0.1:61917;ob;received=192.168.1.2>;tag=123456789";
+        String text = "From: \"sonic\" <sip:1001@szvoc.net>;tag=21bc75cd4dfb4bc3896fc5c0d0ed9cea";
         Header<Contact> header = Parser.parse(new Lexer(text));
         Contact contact = header.get();
-        assert header.getName().equals("Contact");
+        assert header.getName().equals("From");
         assert contact.getName().equals("sonic");
         assert contact.getUri().getSchema().equals("sip");
         assert contact.getUri().getUser().equals("1001");
-        assert contact.getUri().getHost().equals("127.0.0.1");
-        assert contact.getUri().getPort() == 61917;
-        assert StringUtils.isBlank(contact.getUri().getParameter("ob").getString());
-        assert contact.getUri().getParameter("received").getString().equals("192.168.1.2");
-        assert contact.getTag().equals("123456789");
+        assert contact.getUri().getHost().equals("szvoc.net");
+        assert contact.getUri().getPort() == 0;
+        assert contact.getTag().equals("21bc75cd4dfb4bc3896fc5c0d0ed9cea");
     }
 }

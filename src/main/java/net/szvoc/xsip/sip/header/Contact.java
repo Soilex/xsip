@@ -1,9 +1,11 @@
-package net.szvoc.xsip.sip.common;
+package net.szvoc.xsip.sip.header;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.szvoc.xsip.sip.common.Parametric;
+import net.szvoc.xsip.sip.common.URI;
 
-public class Contact extends Parametric<String> {
+public class Contact extends Parametric<String> implements HeaderEntity {
     private static final String TAG = "tag";
 
     @Getter
