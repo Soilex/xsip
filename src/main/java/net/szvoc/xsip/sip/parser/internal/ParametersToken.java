@@ -1,5 +1,6 @@
 package net.szvoc.xsip.sip.parser.internal;
 
+import net.szvoc.xsip.sip.common.CharacterType;
 import net.szvoc.xsip.sip.common.Parameter;
 import net.szvoc.xsip.sip.parser.SyntaxException;
 
@@ -8,19 +9,19 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public class ParametersToken extends Token<List<Parameter>> {
-    public ParametersToken(String id, boolean required, StringBuffer lexer, Consumer<List<Parameter>> matchHandler) {
+    public ParametersToken(String id, boolean required, Lexer lexer, Consumer<List<Parameter>> matchHandler) {
         super(id, required, lexer, matchHandler);
     }
 
-    public ParametersToken(boolean required, StringBuffer lexer, Consumer<List<Parameter>> matchHandler) {
+    public ParametersToken(boolean required, Lexer lexer, Consumer<List<Parameter>> matchHandler) {
         super(required, lexer, matchHandler);
     }
 
-    public ParametersToken(String id, boolean required, StringBuffer lexer) {
+    public ParametersToken(String id, boolean required, Lexer lexer) {
         super(id, required, lexer);
     }
 
-    public ParametersToken(boolean required, StringBuffer lexer) {
+    public ParametersToken(boolean required, Lexer lexer) {
         super(required, lexer);
     }
 
@@ -28,14 +29,10 @@ public class ParametersToken extends Token<List<Parameter>> {
     protected boolean doMatch() throws SyntaxException {
         List<Parameter> parameters = new ArrayList<>();
         while (lexer.read(CharacterType.SEMICOLON) != null) {
-            WordToken nameToken = new WordToken(true, lexer);
-            nameToken.match();
             Parameter parameter = new Parameter();
-            parameter.setName(nameToken.getValue());
+            new WordToken(true, lexer, parameter::setName).match();
             if (lexer.read(CharacterType.EQUALS) != null) {
-                WordToken valueToken = new WordToken(true, lexer);
-                valueToken.match();
-                parameter.setValue(valueToken.getValue());
+                new WordToken(true, lexer, parameter::setValue).match();
             }
             parameters.add(parameter);
         }

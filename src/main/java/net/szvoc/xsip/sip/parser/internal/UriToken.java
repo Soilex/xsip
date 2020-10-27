@@ -1,31 +1,32 @@
 package net.szvoc.xsip.sip.parser.internal;
 
+import net.szvoc.xsip.sip.common.CharacterType;
 import net.szvoc.xsip.sip.common.URI;
 import net.szvoc.xsip.sip.parser.SyntaxException;
 
 import java.util.function.Consumer;
 
 public class UriToken extends Token<URI> {
-    public UriToken(String id, boolean required, StringBuffer lexer, Consumer<URI> matchHandler) {
+    public UriToken(String id, boolean required, Lexer lexer, Consumer<URI> matchHandler) {
         super(id, required, lexer, matchHandler);
     }
 
-    public UriToken(boolean required, StringBuffer lexer, Consumer<URI> matchHandler) {
+    public UriToken(boolean required, Lexer lexer, Consumer<URI> matchHandler) {
         super(required, lexer, matchHandler);
     }
 
-    public UriToken(String id, boolean required, StringBuffer lexer) {
+    public UriToken(String id, boolean required, Lexer lexer) {
         super(id, required, lexer);
     }
 
-    public UriToken(boolean required, StringBuffer lexer) {
+    public UriToken(boolean required, Lexer lexer) {
         super(required, lexer);
     }
 
     @Override
     protected boolean doMatch() throws SyntaxException {
         final URI uri = new URI();
-        new ComplexToken(isRequired(), this.lexer, t -> this.setValue(uri)) {
+        return new ComplexToken(isRequired(), this.lexer, t -> this.setValue(uri)) {
             @Override
             protected void rules() {
                 // schema
@@ -55,9 +56,8 @@ public class UriToken extends Token<URI> {
                     }
                 });
                 // parameters
-                rule(new ParametersToken(false, this.lexer, t -> t.forEach(uri::setParameter)));
+                rule(new ParametersToken(false, this.lexer, uri::setParameters));
             }
         }.match();
-        return this.getValue() != null;
     }
 }

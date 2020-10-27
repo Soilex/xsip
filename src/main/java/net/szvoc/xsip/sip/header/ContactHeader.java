@@ -1,17 +1,10 @@
 package net.szvoc.xsip.sip.header;
 
-import lombok.Data;
-import net.szvoc.xsip.sip.common.URI;
+import net.szvoc.xsip.sip.common.Contact;
 
-public class ContactHeader extends Header<ContactHeader.Contact> {
+public class ContactHeader extends Header<Contact> {
     @Override
     public String getName() {
         return HeaderName.CONTACT;
-    }
-
-    @Data
-    public static class Contact {
-        private String name;
-        private URI uri;
     }
 }

@@ -1,15 +1,16 @@
 package net.szvoc.xsip.sip.parser.internal;
 
+import net.szvoc.xsip.sip.common.CharacterType;
 import net.szvoc.xsip.sip.parser.SyntaxException;
 
-public class StringBuffer {
+public class Lexer {
     private int position = 0;
     private String source;
 
     private static final char CR = '\r';
     private static final char LF = '\n';
 
-    public StringBuffer(String source) {
+    public Lexer(String source) {
         this.source = source;
     }
 
@@ -33,7 +34,7 @@ public class StringBuffer {
         return position = value;
     }
 
-    public StringBuffer skipBlank() {
+    public Lexer skipBlank() {
         while (!isEOF()) {
             char ch = source.charAt(position);
             if (!CharacterType.BLANK.isMatch(ch)) {
@@ -56,7 +57,9 @@ public class StringBuffer {
     }
 
     public void throwSyntaxException() throws SyntaxException {
-        String fragment = source.substring(Math.max(position - 50, 0), position);
+        String fragment = source.substring(Math.max(position - 50, 0), position)
+                .replaceAll("\r", "\\r")
+                .replaceAll("\n", "\\n");
         throw new SyntaxException(position, fragment);
     }
 }

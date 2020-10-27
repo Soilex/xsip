@@ -1,4 +1,4 @@
-package net.szvoc.xsip.sip.parser.internal;
+package net.szvoc.xsip.sip.common;
 
 import lombok.Getter;
 

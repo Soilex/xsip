@@ -12,19 +12,19 @@ import java.util.stream.Collectors;
 public abstract class ComplexToken extends Token<Map<String, ?>> {
     private final List<Token<?>> tokens = new ArrayList<>();
 
-    public ComplexToken(String id, boolean required, StringBuffer lexer, Consumer<Map<String, ?>> matchHandler) {
+    public ComplexToken(String id, boolean required, Lexer lexer, Consumer<Map<String, ?>> matchHandler) {
         super(id, required, lexer, matchHandler);
     }
 
-    public ComplexToken(boolean required, StringBuffer lexer, Consumer<Map<String, ?>> matchHandler) {
+    public ComplexToken(boolean required, Lexer lexer, Consumer<Map<String, ?>> matchHandler) {
         super(required, lexer, matchHandler);
     }
 
-    public ComplexToken(String id, boolean required, StringBuffer lexer) {
+    public ComplexToken(String id, boolean required, Lexer lexer) {
         super(id, required, lexer);
     }
 
-    public ComplexToken(boolean required, StringBuffer lexer) {
+    public ComplexToken(boolean required, Lexer lexer) {
         super(required, lexer);
     }
 
@@ -35,9 +35,9 @@ public abstract class ComplexToken extends Token<Map<String, ?>> {
     protected abstract void rules();
 
     @Override
-    protected void match(boolean handle) throws SyntaxException {
+    protected boolean match(boolean handle) throws SyntaxException {
         this.rules();
-        super.match(handle);
+        return super.match(handle);
     }
 
     @Override

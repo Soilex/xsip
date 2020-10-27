@@ -1,23 +1,24 @@
 package net.szvoc.xsip.sip.parser.internal;
 
+import net.szvoc.xsip.sip.common.CharacterType;
 import net.szvoc.xsip.sip.parser.SyntaxException;
 
 import java.util.function.Consumer;
 
 public class WordToken extends Token<String> {
-    public WordToken(String id, boolean required, StringBuffer lexer, Consumer<String> matchHandler) {
+    public WordToken(String id, boolean required, Lexer lexer, Consumer<String> matchHandler) {
         super(id, required, lexer, matchHandler);
     }
 
-    public WordToken(boolean required, StringBuffer lexer, Consumer<String> matchHandler) {
+    public WordToken(boolean required, Lexer lexer, Consumer<String> matchHandler) {
         super(required, lexer, matchHandler);
     }
 
-    public WordToken(String id, boolean required, StringBuffer lexer) {
+    public WordToken(String id, boolean required, Lexer lexer) {
         super(id, required, lexer);
     }
 
-    public WordToken(boolean required, StringBuffer lexer) {
+    public WordToken(boolean required, Lexer lexer) {
         super(required, lexer);
     }
 

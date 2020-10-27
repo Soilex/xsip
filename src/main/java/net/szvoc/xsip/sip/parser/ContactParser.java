@@ -3,32 +3,17 @@ package net.szvoc.xsip.sip.parser;
 import net.szvoc.xsip.sip.header.ContactHeader;
 import net.szvoc.xsip.sip.header.HeaderName;
 import net.szvoc.xsip.sip.parser.annotation.BindingHeaderName;
-import net.szvoc.xsip.sip.parser.internal.StringBuffer;
+import net.szvoc.xsip.sip.parser.internal.ContactToken;
+import net.szvoc.xsip.sip.parser.internal.Lexer;
 
 @BindingHeaderName(HeaderName.CONTACT)
 public class ContactParser extends Parser<ContactHeader> {
     @Override
-    protected ContactHeader doParse(StringBuffer lexer) throws SyntaxException {
-        ContactHeader.Contact contact = new ContactHeader.Contact();
-//        if (Character.DOUBLEQUOTE.isMatch(lexer.peek())) {
-//            WordToken nameToken = lexer.skip(1).nextToken(TokenType.WORD);
-//            if (!Character.DOUBLEQUOTE.isMatch(lexer.read())) {
-//                lexer.throwSyntaxException();
-//            }
-//            contact.setName(nameToken.getValue().get());
-//            lexer.skipBlank();
-//        }
-//        if (!Character.LESS_THAN.isMatch(lexer.read())) {
-//            lexer.throwSyntaxException();
-//        }
-//        UriToken uriToken = lexer.nextToken(TokenType.URI);
-//        if (!Character.GREATER_THAN.isMatch(lexer.read())) {
-//            lexer.throwSyntaxException();
-//        }
-//        contact.setUri(uriToken.getValue().get());
-//
+    protected ContactHeader doParse(Lexer lexer) throws SyntaxException {
+        ContactToken contactToken = new ContactToken(true, lexer);
+        contactToken.match();
         ContactHeader header = new ContactHeader();
-        header.add(contact);
+        header.add(contactToken.getValue());
         return header;
     }
 }

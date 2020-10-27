@@ -3,12 +3,12 @@ package net.szvoc.xsip.sip.parser;
 import net.szvoc.xsip.sip.header.AcceptHeader;
 import net.szvoc.xsip.sip.header.HeaderName;
 import net.szvoc.xsip.sip.parser.annotation.BindingHeaderName;
-import net.szvoc.xsip.sip.parser.internal.StringBuffer;
+import net.szvoc.xsip.sip.parser.internal.Lexer;
 
 @BindingHeaderName(HeaderName.ACCEPT)
 public class AcceptParser extends Parser<AcceptHeader> {
     @Override
-    protected AcceptHeader doParse(StringBuffer lexer) throws SyntaxException {
+    protected AcceptHeader doParse(Lexer lexer) throws SyntaxException {
         AcceptHeader header = new AcceptHeader();
 //        boolean once = true;
 //        while (!lexer.isEndOfLine()) {

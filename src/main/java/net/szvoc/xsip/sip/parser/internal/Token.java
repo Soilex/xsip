@@ -16,31 +16,31 @@ public abstract class Token<T> {
     @Getter
     private T value;
 
-    protected StringBuffer lexer;
+    protected Lexer lexer;
     private Consumer<T> matchHandler;
     private int mark;
 
-    public Token(String id, boolean required, StringBuffer lexer, Consumer<T> matchHandler) {
+    public Token(String id, boolean required, Lexer lexer, Consumer<T> matchHandler) {
         this.id = id;
         this.required = required;
         this.lexer = lexer;
         this.matchHandler = matchHandler;
     }
 
-    public Token(boolean required, StringBuffer lexer, Consumer<T> matchHandler) {
+    public Token(boolean required, Lexer lexer, Consumer<T> matchHandler) {
         this("", required, lexer, matchHandler);
     }
 
-    public Token(String id, boolean required, StringBuffer lexer) {
+    public Token(String id, boolean required, Lexer lexer) {
         this(id, required, lexer, null);
     }
 
-    public Token(boolean required, StringBuffer lexer) {
+    public Token(boolean required, Lexer lexer) {
         this("", required, lexer, null);
     }
 
-    public final void match() throws SyntaxException {
-        match(true);
+    public final boolean match() throws SyntaxException {
+        return match(true);
     }
 
     protected void markIndex() {
@@ -51,12 +51,13 @@ public abstract class Token<T> {
         lexer.position(this.mark);
     }
 
-    protected void match(boolean handle) throws SyntaxException {
+    protected boolean match(boolean handle) throws SyntaxException {
         markIndex();
         lexer.skipBlank();
         try {
             if (!doMatch()) {
                 resetIndex();
+                return false;
             }
         } catch (SyntaxException ex){
             resetIndex();
@@ -65,6 +66,7 @@ public abstract class Token<T> {
         if (handle) {
             invokeHandler();
         }
+        return true;
     }
 
     protected abstract boolean doMatch() throws SyntaxException;

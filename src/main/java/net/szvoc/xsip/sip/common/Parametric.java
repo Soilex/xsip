@@ -1,7 +1,5 @@
 package net.szvoc.xsip.sip.common;
 
-import org.springframework.util.CollectionUtils;
-
 import java.util.*;
 
 public class Parametric<T> {
@@ -9,6 +7,10 @@ public class Parametric<T> {
 
     public Parameter getParameter(String name) {
         return parameters.getOrDefault(name, null);
+    }
+
+    public void setParameters(Iterable<Parameter> parameters) {
+        parameters.forEach(this::setParameter);
     }
 
     public void setParameter(Parameter parameter) {

@@ -1,18 +1,17 @@
 package net.szvoc.xsip.sip.parser;
 
 import net.szvoc.xsip.sip.header.Header;
-import net.szvoc.xsip.sip.parser.internal.CharacterType;
-import net.szvoc.xsip.sip.parser.internal.StringBuffer;
+import net.szvoc.xsip.sip.common.CharacterType;
+import net.szvoc.xsip.sip.parser.internal.Lexer;
 import net.szvoc.xsip.sip.parser.internal.WordToken;
 
 public abstract class Parser<T extends Header> {
-    public static final char DELIMITER_COLON = ':';
-
-    protected abstract T doParse(StringBuffer lexer) throws SyntaxException;
+    protected abstract T doParse(Lexer lexer) throws SyntaxException;
 
     @SuppressWarnings("unckecked")
-    public static <E extends Header> E parse(StringBuffer lexer) throws SyntaxException {
+    public static <E extends Header> E parse(Lexer lexer) throws SyntaxException {
         WordToken nameToken = new WordToken(true, lexer);
+        nameToken.match();
         if (lexer.read(CharacterType.COLON) == null) {
             lexer.throwSyntaxException();
         }

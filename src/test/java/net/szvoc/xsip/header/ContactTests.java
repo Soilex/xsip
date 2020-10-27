@@ -1,24 +1,22 @@
 package net.szvoc.xsip.header;
 
+import net.szvoc.xsip.sip.common.Contact;
 import net.szvoc.xsip.sip.header.ContactHeader;
 import net.szvoc.xsip.sip.parser.Parser;
 import net.szvoc.xsip.sip.parser.SyntaxException;
-import net.szvoc.xsip.sip.parser.internal.StringBuffer;
+import net.szvoc.xsip.sip.parser.internal.Lexer;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.commons.util.StringUtils;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 class ContactTests {
-
     @Test
     void parse() throws SyntaxException {
-        String text = "Contact: \"sonic\" <sip:1001@127.0.0.1:61917;ob;received=192.168.1.2>";
-        ContactHeader header = Parser.parse(new StringBuffer(text));
+        String text = "Contact: \"sonic\" <sip:1001@127.0.0.1:61917;ob;received=192.168.1.2>;tag=123456789";
+        ContactHeader header = Parser.parse(new Lexer(text));
+        Contact contact = header.get();
         assert header.getName().equals("Contact");
-
-        ContactHeader.Contact contact = header.get();
-
         assert contact.getName().equals("sonic");
         assert contact.getUri().getSchema().equals("sip");
         assert contact.getUri().getUser().equals("1001");
@@ -26,6 +24,6 @@ class ContactTests {
         assert contact.getUri().getPort() == 61917;
         assert StringUtils.isBlank(contact.getUri().getParameter("ob").getString());
         assert contact.getUri().getParameter("received").getString().equals("192.168.1.2");
+        assert contact.getTag().equals("123456789");
     }
-
 }
