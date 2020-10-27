@@ -1,8 +1,6 @@
 package net.szvoc.xsip.sip.header;
 
-import lombok.Getter;
-import lombok.Setter;
-import net.szvoc.xsip.sip.common.Parametric;
+import net.szvoc.xsip.sip.common.ContentType;
 
 /**
  * This interface represents an Accept request-header. It can be used in to
@@ -30,27 +28,9 @@ import net.szvoc.xsip.sip.common.Parametric;
  * @author BEA Systems, NIST
  * @version 1.2
  */
-public class AcceptHeader extends Header<AcceptHeader.ContentType> {
+public class AcceptHeader extends Header<ContentType> {
     @Override
     public String getName() {
         return HeaderName.ACCEPT;
-    }
-
-    public static class ContentType extends Parametric<String> {
-        private static final String Q_VALUE = "q-value";
-
-        private float qValue = 1.0f;
-
-        @Getter
-        @Setter
-        private String contentType;
-
-        @Getter
-        @Setter
-        private String contentSubType;
-
-        public float getQValue() {
-            return this.getParameter(Q_VALUE).getFloat();
-        }
     }
 }

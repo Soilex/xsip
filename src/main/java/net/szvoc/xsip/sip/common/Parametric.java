@@ -45,4 +45,24 @@ public class Parametric<T> {
     public void removeParameter(String name) {
         parameters.remove(name);
     }
+
+    public String getParameterValue(String name, String defaultValue) {
+        Parameter parameter = getParameter(name);
+        return parameter == null ? defaultValue : parameter.getString();
+    }
+
+    public int getParameterValue(String name, int defaultValue) {
+        Parameter parameter = getParameter(name);
+        return parameter == null ? defaultValue : parameter.getInt32();
+    }
+
+    public long getParameterValue(String name, long defaultValue) {
+        Parameter parameter = getParameter(name);
+        return parameter == null ? defaultValue : parameter.getInt64();
+    }
+
+    public float getParameterValue(String name, float defaultValue) {
+        Parameter parameter = getParameter(name);
+        return parameter == null ? defaultValue : parameter.getFloat();
+    }
 }

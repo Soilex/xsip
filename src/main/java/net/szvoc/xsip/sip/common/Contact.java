@@ -17,11 +17,7 @@ public class Contact extends Parametric<String> {
     private String tag;
 
     public String getTag() {
-        Parameter parameter = this.getParameter(TAG);
-        if (parameter == null) {
-            return null;
-        }
-        return parameter.getString();
+        return this.getParameterValue(TAG, null);
     }
 
     public void setTag(String value) {

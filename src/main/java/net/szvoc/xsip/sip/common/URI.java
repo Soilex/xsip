@@ -1,8 +1,10 @@
 package net.szvoc.xsip.sip.common;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class URI extends Parametric<String> {
     private String schema;
     private String user;

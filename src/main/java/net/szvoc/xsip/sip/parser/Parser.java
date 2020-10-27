@@ -5,11 +5,11 @@ import net.szvoc.xsip.sip.common.CharacterType;
 import net.szvoc.xsip.sip.parser.internal.Lexer;
 import net.szvoc.xsip.sip.parser.internal.WordToken;
 
-public abstract class Parser<T extends Header> {
+public abstract class Parser<T extends Header<?>> {
     protected abstract T doParse(Lexer lexer) throws SyntaxException;
 
-    @SuppressWarnings("unckecked")
-    public static <E extends Header> E parse(Lexer lexer) throws SyntaxException {
+    @SuppressWarnings("unchecked")
+    public static <E extends Header<?>> E parse(Lexer lexer) throws SyntaxException {
         WordToken nameToken = new WordToken(true, lexer);
         nameToken.match();
         if (lexer.read(CharacterType.COLON) == null) {

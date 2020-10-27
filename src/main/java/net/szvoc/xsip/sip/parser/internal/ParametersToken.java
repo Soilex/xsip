@@ -37,6 +37,6 @@ public class ParametersToken extends Token<List<Parameter>> {
             parameters.add(parameter);
         }
         this.setValue(parameters);
-        return parameters.size() > 1;
+        return parameters.size() > 0;
     }
 }
