@@ -1,6 +1,5 @@
 package net.szvoc.xsip.sip.parser.internal;
 
-import net.szvoc.xsip.sip.common.CharacterType;
 import net.szvoc.xsip.sip.parser.SyntaxException;
 
 import java.util.Arrays;
@@ -32,12 +31,17 @@ public class EnumToken extends Token<Enum<?>> {
     @Override
     protected boolean doMatch() throws SyntaxException {
         WordToken token = new WordToken(isRequired(), this.lexer);
-        token.match();
-        Enum<?> value = Arrays.stream(this.constants)
-                .filter(c -> c.name().equalsIgnoreCase(token.getValue()))
-                .findAny()
-                .orElse(null);
-        this.setValue(value);
-        return value != null;
+        if (token.match()) {
+            Enum<?> value = Arrays.stream(this.constants)
+                    .filter(c -> c.name().equalsIgnoreCase(token.getValue()))
+                    .findAny()
+                    .orElse(null);
+            if (value == null) {
+                lexer.throwSyntaxException();
+            }
+            this.setValue(value);
+            return true;
+        }
+        return false;
     }
 }
