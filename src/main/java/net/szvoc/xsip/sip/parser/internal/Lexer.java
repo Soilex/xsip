@@ -3,6 +3,8 @@ package net.szvoc.xsip.sip.parser.internal;
 import net.szvoc.xsip.sip.common.CharacterType;
 import net.szvoc.xsip.sip.parser.SyntaxException;
 
+import java.util.Collection;
+
 public class Lexer {
     private int position = 0;
     private String source;
@@ -12,6 +14,18 @@ public class Lexer {
 
     public Lexer(String source) {
         this.source = source;
+    }
+
+    public Character read(Collection<CharacterType> expects) {
+        if (isEOF()) {
+            return null;
+        }
+        Character ch = source.charAt(position++);
+        if (expects != null && !CharacterType.isMatch(ch, expects)) {
+            position--;
+            return null;
+        }
+        return ch;
     }
 
     public Character read(CharacterType... expects) {

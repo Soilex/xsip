@@ -14,7 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class ViaTests {
     @Test
     void parse() throws SyntaxException {
-        String text = "Via: SIP/2.0/UDP 127.0.0.1:54283;rport;branch=z9hG4bKPj393be92570584d94b167c3470ec70c4b";
+        String text = "Via: SIP/2.0/UDP 127.0.0.1:54283;rport;branch=z9hG4bKPj393be92570584d94b167c3470ec70c4b\r\n";
         Header<Via> header = Parser.parse(new Lexer(text));
         Via via = header.get();
         assert header.getName().equals("Via");
@@ -29,7 +29,7 @@ public class ViaTests {
 
     @Test
     void parseWithoutPort() throws SyntaxException {
-        String text = "Via: SIP/2.0/UDP 127.0.0.1;rport;branch=z9hG4bKPj393be92570584d94b167c3470ec70c4b";
+        String text = "Via: SIP/2.0/UDP 127.0.0.1;rport;branch=z9hG4bKPj393be92570584d94b167c3470ec70c4b\r\n";
         Header<Via> header = Parser.parse(new Lexer(text));
         Via via = header.get();
         assert header.getName().equals("Via");

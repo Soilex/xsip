@@ -13,7 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 class ContactTests {
     @Test
     void parse() throws SyntaxException {
-        String text = "Contact: \"sonic\" <sip:1001@127.0.0.1:61917;ob;received=192.168.1.2>;tag=123456789";
+        String text = "Contact: \"sonic\" <sip:1001@127.0.0.1:61917;ob;received=192.168.1.2>;tag=123456789\r\n";
         Header<Contact> header = Parser.parse(new Lexer(text));
         Contact contact = header.get();
         assert header.getName().equals("Contact");

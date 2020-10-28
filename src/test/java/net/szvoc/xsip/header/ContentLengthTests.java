@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 public class ContentLengthTests {
     @Test
     void parse() throws SyntaxException {
-        String text = "Content-Length:   347";
+        String text = "Content-Length:   347\r\n";
         Header<BigDecimal> header = Parser.parse(new Lexer(text));
         int contentLength = header.get().intValue();
         assert header.getName().equals("Content-Length");

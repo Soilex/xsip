@@ -4,6 +4,8 @@ import com.google.common.base.Strings;
 import lombok.Getter;
 import net.szvoc.xsip.sip.parser.SyntaxException;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Consumer;
 
 public abstract class Token<T> {
@@ -19,6 +21,8 @@ public abstract class Token<T> {
     protected Lexer lexer;
     private Consumer<T> matchHandler;
     private int mark;
+
+    private List<TokenValueFilter<T>> tokenValueFilterChain = new ArrayList<>();
 
     public Token(String id, boolean required, Lexer lexer, Consumer<T> matchHandler) {
         this.id = id;
@@ -43,6 +47,11 @@ public abstract class Token<T> {
         return match(true);
     }
 
+    public Token<T> filter(TokenValueFilter<T> filter) {
+        tokenValueFilterChain.add(filter);
+        return this;
+    }
+
     protected void markIndex() {
         this.mark = lexer.position();
     }
@@ -58,8 +67,15 @@ public abstract class Token<T> {
             if (!doMatch()) {
                 resetIndex();
                 return false;
+            } else {
+                for (TokenValueFilter<T> filter : tokenValueFilterChain) {
+                    if (!filter.doFilter(this, this.getValue())) {
+                        resetIndex();
+                        return false;
+                    }
+                }
             }
-        } catch (SyntaxException ex){
+        } catch (SyntaxException ex) {
             resetIndex();
             throw ex;
         }

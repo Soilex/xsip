@@ -2,7 +2,7 @@ package net.szvoc.xsip.sip.common;
 
 import lombok.Getter;
 
-import java.util.Arrays;
+import java.util.Collection;
 
 public enum CharacterType {
     BACKSLASH((int) '\\'),
@@ -40,6 +40,8 @@ public enum CharacterType {
     AND((int) '&'),
     UNDERSCORE((int) '_'),
     COMMA((int)','),
+    CR((int)'\r'),
+    LF((int)'\n'),
 
     DIGIT(1024 + 1),
     ALPHA(1024 + 2),
@@ -68,10 +70,27 @@ public enum CharacterType {
         }
     }
 
-    public static boolean isMatch(Character ch, CharacterType... characters) {
-        if (ch == null || characters == null || characters.length == 0) {
+    public static boolean isMatch(Character ch, Collection<CharacterType> characterTypes) {
+        if (ch == null || characterTypes == null || characterTypes.isEmpty()) {
             return false;
         }
-        return Arrays.stream(characters).anyMatch(characterType -> characterType.isMatch(ch));
+        for (CharacterType characterType : characterTypes) {
+            if (characterType.isMatch(ch)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean isMatch(Character ch, CharacterType... characterTypes) {
+        if (ch == null || characterTypes == null || characterTypes.length == 0) {
+            return false;
+        }
+        for (CharacterType characterType : characterTypes) {
+            if (characterType.isMatch(ch)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

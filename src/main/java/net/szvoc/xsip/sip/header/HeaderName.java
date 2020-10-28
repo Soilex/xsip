@@ -1,6 +1,7 @@
 package net.szvoc.xsip.sip.header;
 
 public interface HeaderName {
+    String EMPTY_LINE = ""; // 空行
     // RFC 3261
     String ACCEPT = "Accept";
     String ACCEPT_ENCODING = "Accept-Encoding";

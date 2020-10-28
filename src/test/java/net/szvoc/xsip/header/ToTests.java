@@ -12,7 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class ToTests {
     @Test
     void parse() throws SyntaxException {
-        String text = "To: \"sonic\" <sip:1001@szvoc.net>";
+        String text = "To: \"sonic\" <sip:1001@szvoc.net>\r\n";
         Header<Contact> header = Parser.parse(new Lexer(text));
         Contact contact = header.get();
         assert header.getName().equals("To");
@@ -25,7 +25,7 @@ public class ToTests {
 
     @Test
     void parseWithoutName() throws SyntaxException {
-        String text = "To: <sip:1001@szvoc.net>";
+        String text = "To: <sip:1001@szvoc.net>\r\n";
         Header<Contact> header = Parser.parse(new Lexer(text));
         Contact contact = header.get();
         assert header.getName().equals("To");

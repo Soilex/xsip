@@ -12,7 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class FromTests {
     @Test
     void parse() throws SyntaxException {
-        String text = "From: \"sonic\" <sip:1001@szvoc.net>;tag=21bc75cd4dfb4bc3896fc5c0d0ed9cea";
+        String text = "From: \"sonic\" <sip:1001@szvoc.net>;tag=21bc75cd4dfb4bc3896fc5c0d0ed9cea\r\n";
         Header<Contact> header = Parser.parse(new Lexer(text));
         Contact contact = header.get();
         assert header.getName().equals("From");
