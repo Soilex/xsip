@@ -21,7 +21,7 @@ public class Lexer {
             return null;
         }
         Character ch = source.charAt(position++);
-        if (expects != null && !CharacterType.isMatch(ch, expects)) {
+        if (expects != null && !expects.isEmpty() && !CharacterType.isMatch(ch, expects)) {
             position--;
             return null;
         }
@@ -34,6 +34,30 @@ public class Lexer {
         }
         Character ch = source.charAt(position++);
         if (expects != null && expects.length > 0 && !CharacterType.isMatch(ch, expects)) {
+            position--;
+            return null;
+        }
+        return ch;
+    }
+
+    public Character readUnexpect(Collection<CharacterType> unexpects) {
+        if (isEOF()) {
+            return null;
+        }
+        Character ch = source.charAt(position++);
+        if (unexpects != null && !unexpects.isEmpty() && CharacterType.isMatch(ch, unexpects)) {
+            position--;
+            return null;
+        }
+        return ch;
+    }
+
+    public Character readUnexpect(CharacterType... unexpects) {
+        if (isEOF()) {
+            return null;
+        }
+        Character ch = source.charAt(position++);
+        if (unexpects != null && unexpects.length > 0 && CharacterType.isMatch(ch, unexpects)) {
             position--;
             return null;
         }
