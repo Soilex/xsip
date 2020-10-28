@@ -5,40 +5,37 @@ import net.szvoc.xsip.sip.parser.SyntaxException;
 import java.util.Arrays;
 import java.util.function.Consumer;
 
-public class EnumToken extends Token<Enum<?>> {
-    private final Enum<?>[] constants;
+public class EnumToken<T extends Enum<T>> extends Token<T> {
+    private final T[] constants;
+    private final T defaultValue;
 
-    public EnumToken(String id, Class<? extends Enum<?>> enumType, boolean required, Lexer lexer, Consumer<Enum<?>> matchHandler) {
+    @SuppressWarnings("unchecked")
+    public EnumToken(String id, T defaultValue, boolean required, Lexer lexer, Consumer<T> matchHandler) {
         super(id, required, lexer, matchHandler);
-        this.constants = enumType.getEnumConstants();
+        this.constants = (T[]) defaultValue.getClass().getEnumConstants();
+        this.defaultValue = defaultValue;
     }
 
-    public EnumToken(Class<? extends Enum<?>> enumType, boolean required, Lexer lexer, Consumer<Enum<?>> matchHandler) {
-        super(required, lexer, matchHandler);
-        this.constants = enumType.getEnumConstants();
+    public EnumToken(T defaultValue, boolean required, Lexer lexer, Consumer<T> matchHandler) {
+        this("", defaultValue, required, lexer, matchHandler);
     }
 
-    public EnumToken(String id, Class<? extends Enum<?>> enumType, boolean required, Lexer lexer) {
-        super(id, required, lexer);
-        this.constants = enumType.getEnumConstants();
+    public EnumToken(String id, T defaultValue, boolean required, Lexer lexer) {
+        this(id, defaultValue, required, lexer, null);
     }
 
-    public EnumToken(Class<? extends Enum<?>> enumType, boolean required, Lexer lexer) {
-        super(required, lexer);
-        this.constants = enumType.getEnumConstants();
+    public EnumToken(T defaultValue, boolean required, Lexer lexer) {
+        this("", defaultValue, required, lexer, null);
     }
 
     @Override
     protected boolean doMatch() throws SyntaxException {
         WordToken token = new WordToken(isRequired(), this.lexer);
         if (token.match()) {
-            Enum<?> value = Arrays.stream(this.constants)
+            T value = Arrays.stream(this.constants)
                     .filter(c -> c.name().equalsIgnoreCase(token.getValue()))
                     .findAny()
-                    .orElse(null);
-            if (value == null) {
-                lexer.throwSyntaxException();
-            }
+                    .orElse(defaultValue);
             this.setValue(value);
             return true;
         }
