@@ -9,8 +9,8 @@ public class Lexer {
     private int position = 0;
     private String source;
 
-    private static final char CR = '\r';
-    private static final char LF = '\n';
+    public static final char CR = '\r';
+    public static final char LF = '\n';
 
     public Lexer(String source) {
         this.source = source;
@@ -63,7 +63,8 @@ public class Lexer {
         if (isEOF()) {
             return true;
         }
-        return source.charAt(position) == CR && source.charAt(position + 1) == LF;
+        char ch = source.charAt(position);
+        return ch == CR || ch == LF;
     }
 
     public boolean isEOF() {

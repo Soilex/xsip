@@ -12,10 +12,8 @@ import java.math.BigDecimal;
 public class NumericParser extends Parser<BigDecimal> {
     @Override
     protected Header<BigDecimal> doParse(String headerName, Lexer lexer) throws SyntaxException {
-        NumericToken token = new NumericToken(true, lexer);
-        token.match();
         Header<BigDecimal> header = new Header<>(headerName);
-        header.add(token.getValue());
+        new NumericToken(true, lexer, header::add).match();
         return header;
     }
 }

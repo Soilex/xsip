@@ -43,8 +43,9 @@ public class ComplexToken extends Token<Map<String, ?>> {
         List<Token<?>> matches = new ArrayList<>();
         for (Token<?> token : tokens) {
             try {
-                token.match(false);
-                matches.add(token);
+                if (token.match(false)) {
+                    matches.add(token);
+                }
             } catch (SyntaxException ex) {
                 if (this.isRequired()) {
                     throw ex;
@@ -53,6 +54,9 @@ public class ComplexToken extends Token<Map<String, ?>> {
                     return false;
                 }
             }
+        }
+        if  (isRequired() && matches.isEmpty()) {
+            lexer.throwSyntaxException();
         }
         Map<String, ?> tokensValue = this.tokens.stream()
                 .filter(p -> !Strings.isNullOrEmpty(p.getId()))

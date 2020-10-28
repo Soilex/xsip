@@ -6,7 +6,7 @@ public interface HeaderName {
     String ACCEPT = "Accept";
     String ACCEPT_ENCODING = "Accept-Encoding";
     String ACCEPT_LANGUAGE = "Accept-Language";
-    String ALTER_INFO = "Alter-Info";
+    String ALERT_INFO = "Alert-Info";
     String ALLOW = "Allow";
     String AUTHENTICATION_INFO = "Authentication-Info";
     String AUTHORIZATION = "Authorization";

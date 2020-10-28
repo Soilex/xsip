@@ -12,10 +12,7 @@ public class AcceptParser extends Parser<ContentType> {
     @Override
     protected Header<ContentType> doParse(String headerName, Lexer lexer) throws SyntaxException {
         Header<ContentType> header = new Header<>(headerName);
-        while (true) {
-            if (header.containsValue() && lexer.read(CharacterType.COMMA) == null) {
-                break;
-            }
+        resolve(header, lexer, () -> {
             ContentType contentType = new ContentType();
             new ComplexToken(true, lexer, t -> header.add(contentType))
                     .define(new WordToken(true, lexer, contentType::setMainType))
@@ -23,7 +20,7 @@ public class AcceptParser extends Parser<ContentType> {
                     .define(new WordToken(true, lexer, contentType::setSubType))
                     .define(new ParametersToken(false, lexer, contentType::setParameters))
                     .match();
-        }
+        });
         return header;
     }
 }

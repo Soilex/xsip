@@ -11,10 +11,8 @@ import net.szvoc.xsip.sip.parser.internal.Lexer;
 public class ContactParser extends Parser<Contact> {
     @Override
     protected Header<Contact> doParse(String headerName, Lexer lexer) throws SyntaxException {
-        ContactToken contactToken = new ContactToken(true, lexer);
-        contactToken.match();
         Header<Contact> header = new Header<>(headerName);
-        header.add(contactToken.getValue());
+        new ContactToken(true, lexer, header::add).match();
         return header;
     }
 }

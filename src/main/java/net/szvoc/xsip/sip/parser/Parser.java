@@ -11,6 +11,19 @@ import net.szvoc.xsip.sip.parser.internal.WordToken;
 public abstract class Parser<T> {
     protected abstract Header<T> doParse(String headerName, Lexer lexer) throws SyntaxException;
 
+    /**
+     * 辅助方法
+     * 从多值SIP头域分离出单个值
+     */
+    protected void resolve(Header<T> header, Lexer lexer, Runnable handler) {
+        while (true) {
+            if (header.containsValue() && lexer.read(CharacterType.COMMA) == null) {
+                break;
+            }
+            handler.run();
+        }
+    }
+
     @SuppressWarnings("unchecked")
     public static <E> Header<E> parse(Lexer lexer) throws SyntaxException {
         if (new CrlfToken(false, lexer).match()) {

@@ -5,20 +5,14 @@ import net.szvoc.xsip.sip.header.AcceptEncoding;
 import net.szvoc.xsip.sip.header.Header;
 import net.szvoc.xsip.sip.header.HeaderName;
 import net.szvoc.xsip.sip.parser.annotation.BindingHeader;
-import net.szvoc.xsip.sip.parser.internal.ComplexToken;
-import net.szvoc.xsip.sip.parser.internal.Lexer;
-import net.szvoc.xsip.sip.parser.internal.ParametersToken;
-import net.szvoc.xsip.sip.parser.internal.WordToken;
+import net.szvoc.xsip.sip.parser.internal.*;
 
 @BindingHeader(HeaderName.ACCEPT_ENCODING)
 public class AcceptEncodingParser extends Parser<AcceptEncoding> {
     @Override
     protected Header<AcceptEncoding> doParse(String headerName, Lexer lexer) throws SyntaxException {
         Header<AcceptEncoding> header = new Header<>(headerName);
-        while (true) {
-            if (header.containsValue() && lexer.read(CharacterType.COMMA) == null) {
-                break;
-            }
+        resolve(header, lexer, () -> {
             AcceptEncoding acceptEncoding = new AcceptEncoding();
             new ComplexToken(true, lexer, t -> header.add(acceptEncoding))
                     .define(new WordToken(true, lexer, acceptEncoding::setEncoding)
@@ -26,7 +20,7 @@ public class AcceptEncodingParser extends Parser<AcceptEncoding> {
                             .filter((token, tokenValue) -> tokenValue.equals("*") || !tokenValue.startsWith("*")))
                     .define(new ParametersToken(false, lexer, acceptEncoding::setParameters))
                     .match();
-        }
+        });
         return header;
     }
 }
