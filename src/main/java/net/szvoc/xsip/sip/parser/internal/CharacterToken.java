@@ -30,7 +30,7 @@ public class CharacterToken extends Token<Character> {
 
     @Override
     protected boolean doMatch() throws SyntaxException {
-        Character ch = lexer.read(this.characterType);
+        Character ch = lexer.expect(this.characterType);
         this.setValue(ch);
         return ch != null;
     }

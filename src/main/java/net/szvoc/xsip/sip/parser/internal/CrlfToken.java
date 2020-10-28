@@ -24,8 +24,8 @@ public class CrlfToken extends Token<String> {
 
     @Override
     protected boolean doMatch() throws SyntaxException {
-        Character cr = lexer.read(CharacterType.CR);
-        Character lf = lexer.read(CharacterType.LF);
+        Character cr = lexer.expect(CharacterType.CR);
+        Character lf = lexer.expect(CharacterType.LF);
         if (lf == null && isRequired()) {
             lexer.throwSyntaxException();
         }

@@ -28,10 +28,10 @@ public class ParametersToken extends Token<List<Parameter>> {
     @Override
     protected boolean doMatch() throws SyntaxException {
         List<Parameter> parameters = new ArrayList<>();
-        while (lexer.read(CharacterType.SEMICOLON) != null) {
+        while (lexer.expect(CharacterType.SEMICOLON) != null) {
             Parameter parameter = new Parameter();
             new WordToken(true, lexer, parameter::setName).match();
-            if (lexer.read(CharacterType.EQUALS) != null) {
+            if (lexer.expect(CharacterType.EQUALS) != null) {
                 new WordToken(true, lexer, parameter::setValue).match();
             }
             parameters.add(parameter);

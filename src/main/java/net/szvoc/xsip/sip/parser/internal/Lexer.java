@@ -9,14 +9,11 @@ public class Lexer {
     private int position = 0;
     private String source;
 
-    public static final char CR = '\r';
-    public static final char LF = '\n';
-
     public Lexer(String source) {
         this.source = source;
     }
 
-    public Character read(Collection<CharacterType> expects) {
+    public Character expect(Collection<CharacterType> expects) {
         if (isEOF()) {
             return null;
         }
@@ -28,7 +25,7 @@ public class Lexer {
         return ch;
     }
 
-    public Character read(CharacterType... expects) {
+    public Character expect(CharacterType... expects) {
         if (isEOF()) {
             return null;
         }
@@ -40,7 +37,7 @@ public class Lexer {
         return ch;
     }
 
-    public Character readUnexpect(Collection<CharacterType> unexpects) {
+    public Character unexpect(Collection<CharacterType> unexpects) {
         if (isEOF()) {
             return null;
         }
@@ -52,7 +49,7 @@ public class Lexer {
         return ch;
     }
 
-    public Character readUnexpect(CharacterType... unexpects) {
+    public Character unexpect(CharacterType... unexpects) {
         if (isEOF()) {
             return null;
         }
@@ -75,7 +72,7 @@ public class Lexer {
     public Lexer skipBlank() {
         while (!isEOF()) {
             char ch = source.charAt(position);
-            if (!CharacterType.BLANK.isMatch(ch)) {
+            if (!CharacterType.isMatch(ch, CharacterType.SPACE, CharacterType.TAB)) {
                 break;
             }
             position++;
@@ -88,7 +85,7 @@ public class Lexer {
             return true;
         }
         char ch = source.charAt(position);
-        return ch == CR || ch == LF;
+        return ch == CharacterType.CR.getCode() || ch == CharacterType.LF.getCode();
     }
 
     public boolean isEOF() {

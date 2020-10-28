@@ -38,16 +38,21 @@ public class StringToken extends Token<String> {
     @Override
     protected boolean doMatch() throws SyntaxException {
         StringBuilder stringBuilder = new StringBuilder();
-        if (startWith != null && !startWith.isMatch(lexer.read())) {
-            lexer.throwSyntaxException();
+        if (startWith != null && lexer.expect(startWith) == null) {
+            if (isRequired()) {
+                lexer.throwSyntaxException();
+            } else {
+                this.setValue(null);
+                return false;
+            }
         }
         while (!lexer.isEOL()) {
-            Character ch = lexer.read();
-            if (startWith != null && startWith.isMatch(ch)) {
-                lexer.throwSyntaxException();
-            }
+            Character ch = lexer.expect();
             if (endWith != null && endWith.isMatch(ch)) {
                 break;
+            }
+            if (startWith != null && startWith.isMatch(ch)) {
+                lexer.throwSyntaxException();
             }
             stringBuilder.append(ch);
         }

@@ -17,7 +17,7 @@ public abstract class Parser<T> {
      */
     protected void resolve(Header<T> header, Lexer lexer, Runnable handler) {
         while (true) {
-            if (header.containsValue() && lexer.read(CharacterType.COMMA) == null) {
+            if (header.containsValue() && lexer.expect(CharacterType.COMMA) == null) {
                 break;
             }
             handler.run();

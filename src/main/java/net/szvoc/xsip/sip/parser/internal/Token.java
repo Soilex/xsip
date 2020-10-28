@@ -2,12 +2,14 @@ package net.szvoc.xsip.sip.parser.internal;
 
 import com.google.common.base.Strings;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import net.szvoc.xsip.sip.parser.SyntaxException;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
+@Slf4j
 public abstract class Token<T> {
     @Getter
     private String id;
@@ -44,7 +46,9 @@ public abstract class Token<T> {
     }
 
     public final boolean match() throws SyntaxException {
-        return match(true);
+        boolean matched = match(true);
+        log.warn("{} match result: {}", this.getClass().getSimpleName(), matched);
+        return matched;
     }
 
     public Token<T> filter(TokenValueFilter<T> filter) {

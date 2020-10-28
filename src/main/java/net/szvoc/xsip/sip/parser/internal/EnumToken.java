@@ -1,5 +1,6 @@
 package net.szvoc.xsip.sip.parser.internal;
 
+import net.szvoc.xsip.sip.common.CharacterType;
 import net.szvoc.xsip.sip.parser.SyntaxException;
 
 import java.util.Arrays;

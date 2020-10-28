@@ -8,7 +8,7 @@ public enum CharacterType {
     BACKSLASH((int) '\\'),
     QUOTE((int) '\''),
     ALT((int) '@'),
-    SP((int) ' '),
+    SPACE((int) ' '),
     TAB((int) '\t'),
     COLON((int) ':'),
     STAR((int) '*'),
@@ -19,7 +19,6 @@ public enum CharacterType {
     DOUBLEQUOTE((int) '\"'),
     TILDE((int) '~'),
     BACK_QUOTE((int) '`'),
-    NULL((int) '\0'),
     EQUALS((int) '='),
     SEMICOLON((int) ';'),
     SLASH((int) '/'),
@@ -44,8 +43,7 @@ public enum CharacterType {
     LF((int)'\n'),
 
     DIGIT(1024 + 1),
-    ALPHA(1024 + 2),
-    BLANK(1024 + 3);
+    ALPHA(1024 + 2);
 
     @Getter
     private int code;
@@ -63,8 +61,6 @@ public enum CharacterType {
                 return ch >= '0' && ch <= '9';
             case ALPHA:
                 return (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z');
-            case BLANK:
-                return ch == SP.code || ch == TAB.code;
             default:
                 return this.code == ch;
         }

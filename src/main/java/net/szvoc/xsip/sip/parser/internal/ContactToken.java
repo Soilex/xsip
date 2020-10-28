@@ -26,18 +26,17 @@ public class ContactToken extends Token<Contact> {
 
     @Override
     protected boolean doMatch() throws SyntaxException {
+        String text = "Contact: \"sonic\" <sip:1001@127.0.0.1:61917;ob;received=192.168.1.2>;tag=123456789\r\n";
         final Contact contact = new Contact();
         return new ComplexToken(isRequired(), this.lexer, t -> this.setValue(contact))
                 // name
-                .define(new ComplexToken(false, this.lexer)
-                        .define(new CharacterToken(CharacterType.DOUBLEQUOTE, true, this.lexer))
-                        .define(new WordToken(true, this.lexer, contact::setName))
-                        .define(new CharacterToken(CharacterType.DOUBLEQUOTE, true, this.lexer)))
+                .define(new StringToken(false, this.lexer, contact::setName)
+                        .startWith(CharacterType.DOUBLEQUOTE)
+                        .endWith(CharacterType.DOUBLEQUOTE))
                 // uri
-                .define(new ComplexToken(true, this.lexer)
-                        .define(new CharacterToken(CharacterType.LESS_THAN, true, this.lexer))
-                        .define(new UriToken(true, this.lexer, contact::setUri))
-                        .define(new CharacterToken(CharacterType.GREATER_THAN, true, this.lexer)))
+                .define(new CharacterToken(CharacterType.LESS_THAN, true, this.lexer))
+                .define(new UriToken(true, this.lexer, contact::setUri))
+                .define(new CharacterToken(CharacterType.GREATER_THAN, true, this.lexer))
                 // parameters
                 .define(new ParametersToken(false, this.lexer, contact::setParameters))
                 .match();

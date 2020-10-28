@@ -28,12 +28,11 @@ public class UriToken extends Token<URI> {
         final URI uri = new URI();
         return new ComplexToken(isRequired(), this.lexer, t -> this.setValue(uri))
                 // schema
-                .define(new ComplexToken(true, this.lexer)
-                        .define(new WordToken(true, this.lexer, uri::setSchema))
-                        .define(new CharacterToken(CharacterType.COLON, true, this.lexer)))
+                .define(new WordToken(true, this.lexer, uri::setSchema))
+                .define(new CharacterToken(CharacterType.COLON, true, this.lexer))
                 // user
                 .define(new ComplexToken(false, this.lexer)
-                        .define(new WordToken(true, this.lexer, uri::setUser))
+                        .define(new WordToken(true, this.lexer, uri::setUser).unexpect(CharacterType.ALT))
                         .define(new CharacterToken(CharacterType.ALT, true, this.lexer)))
                 // host
                 .define(new WordToken(true, this.lexer, uri::setHost))

@@ -8,22 +8,18 @@ import java.util.HashSet;
 import java.util.function.Consumer;
 
 public class WordToken extends Token<String> {
-    private HashSet<CharacterType> endsWith = Sets.newHashSet(
-            CharacterType.BLANK,
+    private HashSet<CharacterType> unexpects = Sets.newHashSet(
+            CharacterType.SPACE,
             CharacterType.TAB,
             CharacterType.CR,
             CharacterType.LF,
-            CharacterType.COMMA,
-            CharacterType.SEMICOLON,
-            CharacterType.SLASH,
-            CharacterType.BACKSLASH,
             CharacterType.COLON,
-            CharacterType.QUOTE,
-            CharacterType.DOUBLEQUOTE,
-            CharacterType.ALT,
+            CharacterType.SEMICOLON,
+            CharacterType.COMMA,
             CharacterType.EQUALS,
+            CharacterType.LESS_THAN,
             CharacterType.GREATER_THAN,
-            CharacterType.LESS_THAN);
+            CharacterType.SLASH);
 
     public WordToken(String id, boolean required, Lexer lexer, Consumer<String> matchHandler) {
         super(id, required, lexer, matchHandler);
@@ -41,9 +37,9 @@ public class WordToken extends Token<String> {
         super(required, lexer);
     }
 
-    public WordToken endsWith(CharacterType... characterTypes) {
+    public WordToken unexpect(CharacterType... characterTypes) {
         for (CharacterType characterType : characterTypes) {
-            endsWith.add(characterType);
+            unexpects.add(characterType);
         }
         return this;
     }
@@ -52,7 +48,7 @@ public class WordToken extends Token<String> {
     protected boolean doMatch() throws SyntaxException {
         StringBuilder stringBuilder = new StringBuilder();
         while (!lexer.isEOL()) {
-            Character ch = lexer.readUnexpect(endsWith);
+            Character ch = lexer.unexpect(unexpects);
             if (ch != null) {
                 stringBuilder.append(ch);
             } else {

@@ -27,7 +27,7 @@ public class NumericToken extends Token<BigDecimal> {
     protected boolean doMatch() throws SyntaxException {
         StringBuilder stringBuilder = new StringBuilder();
         while (!lexer.isEOL()) {
-            Character ch = lexer.read(CharacterType.DOT, CharacterType.DIGIT);
+            Character ch = lexer.expect(CharacterType.DOT, CharacterType.DIGIT);
             if (ch == null) {
                 break;
             }
