@@ -15,18 +15,17 @@ public class ViaParser extends Parser<Via> {
     protected Header<Via> doParse(String headerName, Lexer lexer) throws SyntaxException {
         Header<Via> header = new Header<>(headerName);
         Via via = new Via();
-        new ComplexToken(true, lexer, t -> header.add(via))
-                .define(new EnumToken(Protocol.class, true, lexer, c -> via.setProtocol((Protocol) c)))
-                .define(new CharacterToken(CharacterType.SLASH, true, lexer))
-                .define(new WordToken(true, lexer, via::setVersion))
-                .define(new CharacterToken(CharacterType.SLASH, true, lexer))
-                .define(new EnumToken(Transport.class, true, lexer, c -> via.setTransport((Transport) c)))
-                .define(new WordToken(true, lexer, via::setHost))
-                .define(new ComplexToken(false, lexer)
-                        .define(new CharacterToken(CharacterType.COLON, true, lexer))
-                        .define(new NumericToken(true, lexer, c -> via.setPort(c.intValue()))))
-                .define(new ParametersToken(false, lexer, via::setParameters))
-                .match();
+        new EnumToken(Protocol.class, true, lexer, c -> via.setProtocol((Protocol) c)).match();
+        new CharacterToken(CharacterType.SLASH, true, lexer).match();
+        new WordToken(true, lexer, via::setVersion).match();
+        new CharacterToken(CharacterType.SLASH, true, lexer).match();
+        new EnumToken(Transport.class, true, lexer, c -> via.setTransport((Transport) c)).match();
+        new WordToken(true, lexer, via::setHost).match();
+        new ComplexToken(false, lexer)
+                .define(new CharacterToken(CharacterType.COLON, true, lexer))
+                .define(new NumericToken(true, lexer, c -> via.setPort(c.intValue()))).match();
+        new ParametersToken(false, lexer, via::setParameters).match();
+        header.add(via);
         return header;
     }
 }
