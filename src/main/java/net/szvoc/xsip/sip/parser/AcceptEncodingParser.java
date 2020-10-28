@@ -20,15 +20,12 @@ public class AcceptEncodingParser extends Parser<AcceptEncoding> {
                 break;
             }
             AcceptEncoding acceptEncoding = new AcceptEncoding();
-            new ComplexToken(true, lexer, t -> header.add(acceptEncoding)) {
-                @Override
-                protected void rules() {
-                    rule(new WordToken(true, lexer, acceptEncoding::setEncoding)
+            new ComplexToken(true, lexer, t -> header.add(acceptEncoding))
+                    .define(new WordToken(true, lexer, acceptEncoding::setEncoding)
                             .allow(CharacterType.STAR)
-                            .filter((token, tokenValue) -> tokenValue.equals("*") || !tokenValue.startsWith("*")));
-                    rule(new ParametersToken(false, lexer, acceptEncoding::setParameters));
-                }
-            }.match();
+                            .filter((token, tokenValue) -> tokenValue.equals("*") || !tokenValue.startsWith("*")))
+                    .define(new ParametersToken(false, lexer, acceptEncoding::setParameters))
+                    .match();
         }
         return header;
     }

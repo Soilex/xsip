@@ -26,38 +26,24 @@ public class UriToken extends Token<URI> {
     @Override
     protected boolean doMatch() throws SyntaxException {
         final URI uri = new URI();
-        return new ComplexToken(isRequired(), this.lexer, t -> this.setValue(uri)) {
-            @Override
-            protected void rules() {
+        return new ComplexToken(isRequired(), this.lexer, t -> this.setValue(uri))
                 // schema
-                rule(new ComplexToken(true, this.lexer) {
-                    @Override
-                    protected void rules() {
-                        rule(new WordToken(true, this.lexer, uri::setSchema));
-                        rule(new CharacterToken(CharacterType.COLON, true, this.lexer));
-                    }
-                });
+                .define(new ComplexToken(true, this.lexer)
+                        .define(new WordToken(true, this.lexer, uri::setSchema))
+                        .define(new CharacterToken(CharacterType.COLON, true, this.lexer)))
                 // user
-                rule(new ComplexToken(false, this.lexer) {
-                    @Override
-                    protected void rules() {
-                        rule(new WordToken(true, this.lexer, uri::setUser));
-                        rule(new CharacterToken(CharacterType.ALT, true, this.lexer));
-                    }
-                });
+                .define(new ComplexToken(false, this.lexer)
+                        .define(new WordToken(true, this.lexer, uri::setUser))
+                        .define(new CharacterToken(CharacterType.ALT, true, this.lexer)))
                 // host
-                rule(new WordToken(true, this.lexer, uri::setHost));
+                .define(new WordToken(true, this.lexer, uri::setHost))
                 // port
-                rule(new ComplexToken(false, this.lexer) {
-                    @Override
-                    protected void rules() {
-                        rule(new CharacterToken(CharacterType.COLON, true, this.lexer));
-                        rule(new NumericToken(true, this.lexer, t -> uri.setPort(t.intValue())));
-                    }
-                });
+                .define(new ComplexToken(false, this.lexer)
+                        .define(new CharacterToken(CharacterType.COLON, true, this.lexer))
+                        .define(new NumericToken(true, this.lexer, t -> uri.setPort(t.intValue())))
+                )
                 // parameters
-                rule(new ParametersToken(false, this.lexer, uri::setParameters));
-            }
-        }.match();
+                .define(new ParametersToken(false, this.lexer, uri::setParameters))
+                .match();
     }
 }

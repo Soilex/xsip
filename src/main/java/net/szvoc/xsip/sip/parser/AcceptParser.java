@@ -17,15 +17,12 @@ public class AcceptParser extends Parser<ContentType> {
                 break;
             }
             ContentType contentType = new ContentType();
-            new ComplexToken(true, lexer, t -> header.add(contentType)) {
-                @Override
-                protected void rules() {
-                    rule(new WordToken(true, lexer, contentType::setMainType));
-                    rule(new CharacterToken(CharacterType.SLASH, true, lexer));
-                    rule(new WordToken(true, lexer, contentType::setSubType));
-                    rule(new ParametersToken(false, lexer, contentType::setParameters));
-                }
-            }.match();
+            new ComplexToken(true, lexer, t -> header.add(contentType))
+                    .define(new WordToken(true, lexer, contentType::setMainType))
+                    .define(new CharacterToken(CharacterType.SLASH, true, lexer))
+                    .define(new WordToken(true, lexer, contentType::setSubType))
+                    .define(new ParametersToken(false, lexer, contentType::setParameters))
+                    .match();
         }
         return header;
     }

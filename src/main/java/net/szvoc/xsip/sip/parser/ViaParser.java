@@ -15,25 +15,18 @@ public class ViaParser extends Parser<Via> {
     protected Header<Via> doParse(String headerName, Lexer lexer) throws SyntaxException {
         Header<Via> header = new Header<>(headerName);
         Via via = new Via();
-        new ComplexToken(true, lexer, t -> header.add(via)) {
-            @Override
-            protected void rules() {
-                rule(new EnumToken(Protocol.class, true, lexer, c -> via.setProtocol((Protocol) c)));
-                rule(new CharacterToken(CharacterType.SLASH, true, lexer));
-                rule(new WordToken(true, lexer, via::setVersion));
-                rule(new CharacterToken(CharacterType.SLASH, true, lexer));
-                rule(new EnumToken(Transport.class, true, lexer, c -> via.setTransport((Transport) c)));
-                rule(new WordToken(true, lexer, via::setHost));
-                rule(new ComplexToken(false, lexer) {
-                    @Override
-                    protected void rules() {
-                        rule(new CharacterToken(CharacterType.COLON, true, lexer));
-                        rule(new NumericToken(true, lexer, c -> via.setPort(c.intValue())));
-                    }
-                });
-                rule(new ParametersToken(false, lexer, via::setParameters));
-            }
-        }.match();
+        new ComplexToken(true, lexer, t -> header.add(via))
+                .define(new EnumToken(Protocol.class, true, lexer, c -> via.setProtocol((Protocol) c)))
+                .define(new CharacterToken(CharacterType.SLASH, true, lexer))
+                .define(new WordToken(true, lexer, via::setVersion))
+                .define(new CharacterToken(CharacterType.SLASH, true, lexer))
+                .define(new EnumToken(Transport.class, true, lexer, c -> via.setTransport((Transport) c)))
+                .define(new WordToken(true, lexer, via::setHost))
+                .define(new ComplexToken(false, lexer)
+                        .define(new CharacterToken(CharacterType.COLON, true, lexer))
+                        .define(new NumericToken(true, lexer, c -> via.setPort(c.intValue()))))
+                .define(new ParametersToken(false, lexer, via::setParameters))
+                .match();
         return header;
     }
 }

@@ -27,30 +27,19 @@ public class ContactToken extends Token<Contact> {
     @Override
     protected boolean doMatch() throws SyntaxException {
         final Contact contact = new Contact();
-        return new ComplexToken(isRequired(), this.lexer, t -> this.setValue(contact)) {
-            @Override
-            protected void rules() {
+        return new ComplexToken(isRequired(), this.lexer, t -> this.setValue(contact))
                 // name
-                rule(new ComplexToken(false, this.lexer) {
-                    @Override
-                    protected void rules() {
-                        rule(new CharacterToken(CharacterType.DOUBLEQUOTE, true, this.lexer));
-                        rule(new WordToken(true, this.lexer, contact::setName));
-                        rule(new CharacterToken(CharacterType.DOUBLEQUOTE, true, this.lexer));
-                    }
-                });
+                .define(new ComplexToken(false, this.lexer)
+                        .define(new CharacterToken(CharacterType.DOUBLEQUOTE, true, this.lexer))
+                        .define(new WordToken(true, this.lexer, contact::setName))
+                        .define(new CharacterToken(CharacterType.DOUBLEQUOTE, true, this.lexer)))
                 // uri
-                rule(new ComplexToken(true, this.lexer) {
-                    @Override
-                    protected void rules() {
-                        rule(new CharacterToken(CharacterType.LESS_THAN, true, this.lexer));
-                        rule(new UriToken(true, this.lexer, contact::setUri));
-                        rule(new CharacterToken(CharacterType.GREATER_THAN, true, this.lexer));
-                    }
-                });
+                .define(new ComplexToken(true, this.lexer)
+                        .define(new CharacterToken(CharacterType.LESS_THAN, true, this.lexer))
+                        .define(new UriToken(true, this.lexer, contact::setUri))
+                        .define(new CharacterToken(CharacterType.GREATER_THAN, true, this.lexer)))
                 // parameters
-                rule(new ParametersToken(false, this.lexer, contact::setParameters));
-            }
-        }.match();
+                .define(new ParametersToken(false, this.lexer, contact::setParameters))
+                .match();
     }
 }

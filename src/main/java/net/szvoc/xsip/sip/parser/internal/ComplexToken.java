@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-public abstract class ComplexToken extends Token<Map<String, ?>> {
+public class ComplexToken extends Token<Map<String, ?>> {
     private final List<Token<?>> tokens = new ArrayList<>();
 
     public ComplexToken(String id, boolean required, Lexer lexer, Consumer<Map<String, ?>> matchHandler) {
@@ -28,15 +28,13 @@ public abstract class ComplexToken extends Token<Map<String, ?>> {
         super(required, lexer);
     }
 
-    protected <T> void rule(Token<T> token) {
+    public <T> ComplexToken define(Token<T> token) {
         tokens.add(token);
+        return this;
     }
-
-    protected abstract void rules();
 
     @Override
     protected boolean match(boolean handle) throws SyntaxException {
-        this.rules();
         return super.match(handle);
     }
 
