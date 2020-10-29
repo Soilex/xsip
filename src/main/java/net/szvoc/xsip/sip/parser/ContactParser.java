@@ -33,7 +33,7 @@ import net.szvoc.xsip.sip.parser.internal.Lexer;
  * as reserved characters, they can be mistaken for header or
  * parameter delimiters, respectively.
  * The compact form of the Contact header field is m (for "moved").
- * Examples:
+ * Example:
  * Contact: "Mr. Watson" <sip:watson@worcester.bell-telephone.com>;q=0.7; expires=3600, "Mr. Watson" <mailto:watson@bell-telephone.com>;q=0.1
  */
 @BindingHeader({HeaderName.CONTACT, HeaderName.TO, HeaderName.FROM})

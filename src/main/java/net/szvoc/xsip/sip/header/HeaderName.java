@@ -17,7 +17,7 @@ public interface HeaderName {
     String CONTENT_ENCODING = "Content-Encoding";
     String CONTENT_LANGUAGE = "Content-Language";
     String CONTENT_LENGTH = "Content-Length";
-    String CONTENT_TYPE = "Content-TYPE";
+    String CONTENT_TYPE = "Content-Type";
     String CSEQ = "CSeq";
     String DATE = "DATE";
     String ERROR_INFO = "Error-Info";

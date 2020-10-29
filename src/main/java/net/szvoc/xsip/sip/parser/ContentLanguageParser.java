@@ -10,6 +10,12 @@ import net.szvoc.xsip.sip.parser.internal.WordToken;
 
 import java.util.Locale;
 
+/**
+ * The Content-Language header field is used to indicate the language of the
+ * message body.
+ * Example:
+ * Content-Language: zh-CN
+ */
 @BindingHeader(HeaderName.CONTENT_LANGUAGE)
 public class ContentLanguageParser extends Parser<Locale> {
     @Override
