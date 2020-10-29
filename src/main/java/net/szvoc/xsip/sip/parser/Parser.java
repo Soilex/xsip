@@ -32,7 +32,7 @@ public abstract class Parser<T> {
             WordToken nameToken = new WordToken(true, lexer);
             nameToken.match();
             String headerName = nameToken.getValue();
-            new CharacterToken(CharacterType.COLON, true, lexer).match();
+            new CharacterToken(true, lexer).expect(CharacterType.COLON).match();
             Header<E> header = ParserFactory.create(headerName).doParse(headerName, lexer);
             new CrlfToken(true, lexer).match();
             return header;

@@ -2,11 +2,11 @@ package net.szvoc.xsip.sip.header;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.szvoc.xsip.sip.common.ParameterName;
 import net.szvoc.xsip.sip.common.Parametric;
 
 public class AcceptLanguage extends Parametric<String> {
-    private static final String Q_VALUE = "q";
-    private static float DEFAULT_Q_VALUE = 1f;
+    private static float DEFAULT_Q = 1f;
 
     @Getter
     @Setter
@@ -16,11 +16,11 @@ public class AcceptLanguage extends Parametric<String> {
     @Setter
     private String country;
 
-    public float getQValue() {
-        return this.getParameterValue(Q_VALUE, DEFAULT_Q_VALUE);
+    public float getQ() {
+        return this.getParameterValue(ParameterName.Q, DEFAULT_Q);
     }
 
-    public void setQValue(float value) {
-        this.setParameter(Q_VALUE, value);
+    public void setQ(float value) {
+        this.setParameter(ParameterName.Q, value);
     }
 }

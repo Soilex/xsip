@@ -29,16 +29,16 @@ public class UriToken extends Token<URI> {
         return new ComplexToken(isRequired(), this.lexer, t -> this.setValue(uri))
                 // schema
                 .define(new WordToken(true, this.lexer, uri::setSchema))
-                .define(new CharacterToken(CharacterType.COLON, true, this.lexer))
+                .define(new CharacterToken(true, this.lexer).expect(CharacterType.COLON))
                 // user
                 .define(new ComplexToken(false, this.lexer)
                         .define(new WordToken(true, this.lexer, uri::setUser).unexpect(CharacterType.ALT))
-                        .define(new CharacterToken(CharacterType.ALT, true, this.lexer)))
+                        .define(new CharacterToken(true, this.lexer).expect(CharacterType.ALT)))
                 // host
                 .define(new WordToken(true, this.lexer, uri::setHost))
                 // port
                 .define(new ComplexToken(false, this.lexer)
-                        .define(new CharacterToken(CharacterType.COLON, true, this.lexer))
+                        .define(new CharacterToken(true, this.lexer).expect(CharacterType.COLON))
                         .define(new NumericToken(true, this.lexer, t -> uri.setPort(t.intValue())))
                 )
                 // parameters

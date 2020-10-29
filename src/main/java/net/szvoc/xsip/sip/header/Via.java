@@ -2,14 +2,9 @@ package net.szvoc.xsip.sip.header;
 
 import lombok.Getter;
 import lombok.Setter;
-import net.szvoc.xsip.sip.common.EnumEx;
-import net.szvoc.xsip.sip.common.Parametric;
-import net.szvoc.xsip.sip.common.Protocol;
-import net.szvoc.xsip.sip.common.Transport;
+import net.szvoc.xsip.sip.common.*;
 
 public class Via extends Parametric<String> {
-    private static final String BRANCH = "branch";
-
     @Getter
     @Setter
     private EnumEx<Protocol> protocol;
@@ -30,13 +25,11 @@ public class Via extends Parametric<String> {
     @Setter
     private int port;
 
-    private String branch;
-
     public String getBranch() {
-        return this.getParameterValue(BRANCH, null);
+        return this.getParameterValue(ParameterName.BRANCH, null);
     }
 
     public void setBranch(String value) {
-        this.setParameter(BRANCH, value);
+        this.setParameter(ParameterName.BRANCH, value);
     }
 }

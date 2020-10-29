@@ -24,16 +24,16 @@ class AcceptLanguageTests {
         AcceptLanguage first = iterator.next();
         assert first.getLanguage().equals("da");
         assert Strings.isNullOrEmpty(first.getCountry());
-        assert BigDecimal.valueOf(first.getQValue()).equals(BigDecimal.valueOf(1f));
+        assert BigDecimal.valueOf(first.getQ()).equals(BigDecimal.valueOf(1f));
 
         AcceptLanguage second = iterator.next();
         assert second.getLanguage().equals("en");
         assert second.getCountry().equals("gb");
-        assert BigDecimal.valueOf(second.getQValue()).equals(BigDecimal.valueOf(0.8f));
+        assert BigDecimal.valueOf(second.getQ()).equals(BigDecimal.valueOf(0.8f));
 
         AcceptLanguage third = iterator.next();
         assert third.getLanguage().equals("en");
         assert Strings.isNullOrEmpty(third.getCountry());
-        assert BigDecimal.valueOf(third.getQValue()).equals(BigDecimal.valueOf(0.7f));
+        assert BigDecimal.valueOf(third.getQ()).equals(BigDecimal.valueOf(0.7f));
     }
 }

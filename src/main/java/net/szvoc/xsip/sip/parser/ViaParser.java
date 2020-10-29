@@ -16,13 +16,13 @@ public class ViaParser extends Parser<Via> {
         Header<Via> header = new Header<>(headerName);
         Via via = new Via();
         new EnumToken<Protocol>(Protocol.UNKNOWN, true, lexer, via::setProtocol).match();
-        new CharacterToken(CharacterType.SLASH, true, lexer).match();
+        new CharacterToken(true, lexer).expect(CharacterType.SLASH).match();
         new WordToken(true, lexer, via::setVersion).match();
-        new CharacterToken(CharacterType.SLASH, true, lexer).match();
+        new CharacterToken(true, lexer).expect(CharacterType.SLASH).match();
         new EnumToken<Transport>(Transport.UNKNOWN, true, lexer, via::setTransport).match();
         new WordToken(true, lexer, via::setHost).match();
         new ComplexToken(false, lexer)
-                .define(new CharacterToken(CharacterType.COLON, true, lexer))
+                .define(new CharacterToken(true, lexer).expect(CharacterType.COLON))
                 .define(new NumericToken(true, lexer, c -> via.setPort(c.intValue()))).match();
         new ParametersToken(false, lexer, via::setParameters).match();
         header.add(via);

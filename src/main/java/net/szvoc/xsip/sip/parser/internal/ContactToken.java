@@ -34,9 +34,9 @@ public class ContactToken extends Token<Contact> {
                         .startWith(CharacterType.DOUBLEQUOTE)
                         .endWith(CharacterType.DOUBLEQUOTE))
                 // uri
-                .define(new CharacterToken(CharacterType.LESS_THAN, true, this.lexer))
+                .define(new CharacterToken(true, this.lexer).expect(CharacterType.LESS_THAN))
                 .define(new UriToken(true, this.lexer, contact::setUri))
-                .define(new CharacterToken(CharacterType.GREATER_THAN, true, this.lexer))
+                .define(new CharacterToken(true, this.lexer).expect(CharacterType.GREATER_THAN))
                 // parameters
                 .define(new ParametersToken(false, this.lexer, contact::setParameters))
                 .match();

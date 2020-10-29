@@ -30,7 +30,7 @@ public class AcceptLanguageParser extends Parser<AcceptLanguage> {
             AcceptLanguage acceptLanguage = new AcceptLanguage();
             new ComplexToken(true, lexer, t -> header.add(acceptLanguage))
                     .define(new WordToken(true, lexer, acceptLanguage::setLanguage).unexpect(CharacterType.MINUS))
-                    .define(new CharacterToken(CharacterType.MINUS, false, lexer))
+                    .define(new CharacterToken(false, lexer).expect(CharacterType.MINUS))
                     .define(new WordToken(false, lexer, acceptLanguage::setCountry))
                     .define(new ParametersToken(false, lexer, acceptLanguage::setParameters))
                     .match();

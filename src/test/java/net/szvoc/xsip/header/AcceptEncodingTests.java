@@ -23,14 +23,14 @@ class AcceptEncodingTests {
 
         AcceptEncoding first = iterator.next();
         assert first.getEncoding().equals("deflate");
-        assert BigDecimal.valueOf(first.getQValue()).compareTo(BigDecimal.valueOf(1f)) == 0;
+        assert BigDecimal.valueOf(first.getQ()).compareTo(BigDecimal.valueOf(1f)) == 0;
 
         AcceptEncoding second = iterator.next();
         assert second.getEncoding().equals("gzip");
-        assert BigDecimal.valueOf(second.getQValue()).compareTo(BigDecimal.valueOf(1f)) == 0;
+        assert BigDecimal.valueOf(second.getQ()).compareTo(BigDecimal.valueOf(1f)) == 0;
 
         AcceptEncoding third = iterator.next();
         assert third.getEncoding().equals("*");
-        assert BigDecimal.valueOf(third.getQValue()).compareTo(BigDecimal.valueOf(0.5f)) == 0;
+        assert BigDecimal.valueOf(third.getQ()).compareTo(BigDecimal.valueOf(0.5f)) == 0;
     }
 }

@@ -2,12 +2,11 @@ package net.szvoc.xsip.sip.header;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.szvoc.xsip.sip.common.ParameterName;
 import net.szvoc.xsip.sip.common.Parametric;
 import net.szvoc.xsip.sip.common.URI;
 
 public class Contact extends Parametric<String> {
-    private static final String TAG = "tag";
-
     @Getter
     @Setter
     private String name;
@@ -16,13 +15,11 @@ public class Contact extends Parametric<String> {
     @Setter
     private URI uri;
 
-    private String tag;
-
     public String getTag() {
-        return this.getParameterValue(TAG, null);
+        return this.getParameterValue(ParameterName.TAG, null);
     }
 
     public void setTag(String value) {
-        this.setParameter(TAG, value);
+        this.setParameter(ParameterName.TAG, value);
     }
 }

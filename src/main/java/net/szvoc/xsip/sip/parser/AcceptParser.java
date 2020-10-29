@@ -25,7 +25,7 @@ public class AcceptParser extends Parser<ContentType> {
         resolve(header, lexer, () -> {
             ContentType contentType = new ContentType();
             new WordToken(true, lexer, contentType::setMainType).match();
-            new CharacterToken(CharacterType.SLASH, true, lexer).match();
+            new CharacterToken(true, lexer).expect(CharacterType.SLASH).match();
             new WordToken(true, lexer, contentType::setSubType).match();
             new ParametersToken(false, lexer, contentType::setParameters).match();
             header.add(contentType);

@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public class ParametersToken extends Token<List<Parameter>> {
+    private boolean ignoreFirstSemicolon = false;
+
     public ParametersToken(String id, boolean required, Lexer lexer, Consumer<List<Parameter>> matchHandler) {
         super(id, required, lexer, matchHandler);
     }
@@ -25,10 +27,20 @@ public class ParametersToken extends Token<List<Parameter>> {
         super(required, lexer);
     }
 
+    public ParametersToken ignoreFirstSemicolon() {
+        this.ignoreFirstSemicolon = true;
+        return this;
+    }
+
     @Override
     protected boolean doMatch() throws SyntaxException {
         List<Parameter> parameters = new ArrayList<>();
-        while (lexer.expect(CharacterType.SEMICOLON) != null) {
+        while (!lexer.isEOL()) {
+            if (lexer.expect(CharacterType.SEMICOLON) == null) {
+                if (!parameters.isEmpty() || !ignoreFirstSemicolon) {
+                    break;
+                }
+            }
             Parameter parameter = new Parameter();
             new WordToken(true, lexer, parameter::setName).match();
             if (lexer.expect(CharacterType.EQUALS) != null) {
@@ -37,6 +49,6 @@ public class ParametersToken extends Token<List<Parameter>> {
             parameters.add(parameter);
         }
         this.setValue(parameters);
-        return parameters.size() > 0;
+        return !parameters.isEmpty();
     }
 }
