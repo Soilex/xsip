@@ -16,7 +16,7 @@ class UriTests {
         UriToken token = new UriToken(true, new Lexer("sip:1001@127.0.0.1:61917"));
         token.match();
         URI uri = token.getValue();
-        assert uri.getSchema().equals("sip");
+        assert uri.getScheme().equals("sip");
         assert uri.getUser().equals("1001");
         assert uri.getHost().equals("127.0.0.1");
         assert uri.getPort() == 61917;
@@ -27,7 +27,7 @@ class UriTests {
         UriToken token = new UriToken(true, new Lexer("sip:1001@127.0.0.1:61917;ob;received=192.168.1.1\r\n"));
         token.match();
         URI uri = token.getValue();
-        assert uri.getSchema().equals("sip");
+        assert uri.getScheme().equals("sip");
         assert uri.getUser().equals("1001");
         assert uri.getHost().equals("127.0.0.1");
         assert uri.getPort() == 61917;
@@ -40,7 +40,7 @@ class UriTests {
         UriToken token = new UriToken(true, new Lexer("sip:127.0.0.1:61917"));
         token.match();
         URI uri = token.getValue();
-        assert uri.getSchema().equals("sip");
+        assert uri.getScheme().equals("sip");
         assert StringUtils.isBlank(uri.getUser());
         assert uri.getHost().equals("127.0.0.1");
         assert uri.getPort() == 61917;
@@ -51,7 +51,7 @@ class UriTests {
         UriToken token = new UriToken(true, new Lexer("sip:cc.szvoc.net"));
         token.match();
         URI uri = token.getValue();
-        assert uri.getSchema().equals("sip");
+        assert uri.getScheme().equals("sip");
         assert StringUtils.isBlank(uri.getUser());
         assert uri.getHost().equals("cc.szvoc.net");
         assert uri.getPort() == 0;

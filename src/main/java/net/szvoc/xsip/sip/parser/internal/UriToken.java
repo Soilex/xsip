@@ -28,7 +28,7 @@ public class UriToken extends Token<URI> {
         final URI uri = new URI();
         return new ComplexToken(isRequired(), this.lexer, t -> this.setValue(uri))
                 // schema
-                .define(new WordToken(true, this.lexer, uri::setSchema))
+                .define(new WordToken(true, this.lexer, uri::setScheme))
                 .define(new CharacterToken(true, this.lexer).expect(CharacterType.COLON))
                 // user
                 .define(new ComplexToken(false, this.lexer)

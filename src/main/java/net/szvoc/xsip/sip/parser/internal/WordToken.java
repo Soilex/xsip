@@ -44,6 +44,13 @@ public class WordToken extends Token<String> {
         return this;
     }
 
+    public WordToken expect(CharacterType... characterTypes) {
+        for (CharacterType characterType : characterTypes) {
+            unexpects.remove(characterType);
+        }
+        return this;
+    }
+
     @Override
     protected boolean doMatch() throws SyntaxException {
         StringBuilder stringBuilder = new StringBuilder();

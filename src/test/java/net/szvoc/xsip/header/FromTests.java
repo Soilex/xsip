@@ -17,7 +17,7 @@ public class FromTests {
         Contact contact = header.get();
         assert header.getName().equals("From");
         assert contact.getName().equals("sonic");
-        assert contact.getUri().getSchema().equals("sip");
+        assert contact.getUri().getScheme().equals("sip");
         assert contact.getUri().getUser().equals("1001");
         assert contact.getUri().getHost().equals("szvoc.net");
         assert contact.getUri().getPort() == 0;

@@ -14,6 +14,7 @@ import net.szvoc.xsip.sip.parser.internal.*;
  * application/sdp.
  * <p>
  * An empty Accept header field means that no formats are acceptable.
+ * <p>
  * Example:
  * Accept: application/sdp;level=1, application/x-private, text/html
  */

@@ -14,20 +14,20 @@ import net.szvoc.xsip.sip.parser.internal.WordToken;
  * the content-codings [H3.5] that are acceptable in the response.  See
  * [H14.3].  The semantics in SIP are identical to those defined in
  * [H14.3].
- *
+ * <p>
  * An empty Accept-Encoding header field is permissible.  It is
  * equivalent to Accept-Encoding: identity, that is, only the identity
  * encoding, meaning no encoding, is permissible.
- *
+ * <p>
  * If no Accept-Encoding header field is present, the server SHOULD
  * assume a default value of identity.
- *
+ * <p>
  * This differs slightly from the HTTP definition, which indicates that
  * when not present, any encoding can be used, but the identity encoding
  * is preferred.
- *
+ * <p>
  * Example:
- *    Accept-Encoding: deflate, gzip;q=1.0, *;q=0.5
+ * Accept-Encoding: deflate, gzip;q=1.0, *;q=0.5
  */
 @BindingHeader(HeaderName.ACCEPT_ENCODING)
 public class AcceptEncodingParser extends Parser<AcceptEncoding> {
