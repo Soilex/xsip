@@ -1,0 +1,63 @@
+package net.szvoc.xsip.sip.parser;
+
+import net.szvoc.xsip.sip.header.ContentDisposition;
+import net.szvoc.xsip.sip.header.Header;
+import net.szvoc.xsip.sip.header.HeaderName;
+import net.szvoc.xsip.sip.parser.annotation.BindingHeader;
+import net.szvoc.xsip.sip.parser.internal.Lexer;
+import net.szvoc.xsip.sip.parser.internal.ParametersToken;
+import net.szvoc.xsip.sip.parser.internal.WordToken;
+
+/**
+ * The Content-Disposition header field describes how the message body
+ * or, for multipart messages, a message body part is to be interpreted
+ * by the UAC or UAS.  This SIP header field extends the MIME Content-
+ * Type (RFC 2183 [18]).
+ * Several new "disposition-types" of the Content-Disposition header are
+ * defined by SIP.  The value "session" indicates that the body part
+ * describes a session, for either calls or early (pre-call) media.  The
+ * value "render" indicates that the body part should be displayed or
+ * otherwise rendered to the user.  Note that the value "render" is used
+ * rather than "inline" to avoid the connotation that the MIME body is
+ * displayed as a part of the rendering of the entire message (since the
+ * MIME bodies of SIP messages oftentimes are not displayed to users).
+ * For backward-compatibility, if the Content-Disposition header field
+ * is missing, the server SHOULD assume bodies of Content-Type
+ * application/sdp are the disposition "session", while other content
+ * types are "render".
+ * The disposition type "icon" indicates that the body part contains an
+ * image suitable as an iconic representation of the caller or callee
+ * that could be rendered informationally by a user agent when a message
+ * has been received, or persistently while a dialog takes place.  The
+ * value "alert" indicates that the body part contains information, such
+ * as an audio clip, that should be rendered by the user agent in an
+ * attempt to alert the user to the receipt of a request, generally a
+ * request that initiates a dialog; this alerting body could for example
+ * be rendered as a ring tone for a phone call after a 180 Ringing
+ * provisional response has been sent.
+ * Any MIME body with a "disposition-type" that renders content to the
+ * user should only be processed when a message has been properly
+ * authenticated.
+ * The handling parameter, handling-param, describes how the UAS should
+ * react if it receives a message body whose content type or disposition
+ * type it does not understand.  The parameter has defined values of
+ * "optional" and "required".  If the handling parameter is missing, the
+ * value "required" SHOULD be assumed.  The handling parameter is
+ * described in RFC 3204 [19].
+ * If this header field is missing, the MIME type determines the default
+ * content disposition.  If there is none, "render" is assumed.
+ * Example:
+ * Content-Disposition: session
+ */
+@BindingHeader(HeaderName.CONTENT_DISPOSITION)
+public class ContentDispositionParser extends Parser<ContentDisposition> {
+    @Override
+    protected Header<ContentDisposition> doParse(String headerName, Lexer lexer) throws SyntaxException {
+        Header<ContentDisposition> header = new Header<>(headerName);
+        ContentDisposition contentDisposition = new ContentDisposition();
+        new WordToken(true, lexer, contentDisposition::setDispositionType).match();
+        new ParametersToken(true, lexer, contentDisposition::setParameters).match();
+        header.add(contentDisposition);
+        return header;
+    }
+}

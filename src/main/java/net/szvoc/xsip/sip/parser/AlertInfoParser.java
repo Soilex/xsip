@@ -13,18 +13,14 @@ import net.szvoc.xsip.sip.parser.internal.StringToken;
  * (Ringing) response, the Alert-Info header field specifies an
  * alternative ringback tone to the UAC.  A typical usage is for a proxy
  * to insert this header field to provide a distinctive ring feature.
- * <p>
  * The Alert-Info header field can introduce security risks.  These
  * risks and the ways to handle them are discussed in Section 20.9,
  * which discusses the Call-Info header field since the risks are
  * identical.
- * <p>
  * In addition, a user SHOULD be able to disable this feature
  * selectively.
- * <p>
  * This helps prevent disruptions that could result from the use of
  * this header field by untrusted elements.
- * <p>
  * Example:
  * Alert-Info: <http://www.example.com/sounds/moo.wav>
  */

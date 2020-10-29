@@ -13,7 +13,7 @@ public interface HeaderName {
     String CALL_ID = "Call-ID";
     String CALL_INFO = "Call-Info";
     String CONTACT = "Contact";
-    String CONTENT_DISPOSITION = "Content_Disposition";
+    String CONTENT_DISPOSITION = "Content-Disposition";
     String CONTENT_ENCODING = "Content-Encoding";
     String CONTENT_LANGUAGE = "Content-Language";
     String CONTENT_LENGTH = "Content-Length";

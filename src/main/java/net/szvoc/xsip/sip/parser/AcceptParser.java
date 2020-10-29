@@ -12,9 +12,7 @@ import net.szvoc.xsip.sip.parser.internal.*;
  * semantics are also identical, with the exception that if no Accept
  * header field is present, the server SHOULD assume a default value of
  * application/sdp.
- * <p>
  * An empty Accept header field means that no formats are acceptable.
- * <p>
  * Example:
  * Accept: application/sdp;level=1, application/x-private, text/html
  */

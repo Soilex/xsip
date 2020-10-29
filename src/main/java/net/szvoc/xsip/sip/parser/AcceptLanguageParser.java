@@ -13,11 +13,9 @@ import net.szvoc.xsip.sip.parser.internal.*;
  * status responses carried as message bodies in the response.  If no
  * Accept-Language header field is present, the server SHOULD assume all
  * languages are acceptable to the client.
- * <p>
  * The Accept-Language header field follows the syntax defined in
  * [H14.4].  The rules for ordering the languages based on the "q"
  * parameter apply to SIP as well.
- * <p>
  * Example:
  * Accept-Language: da, en-gb;q=0.8, en;q=0.7
  */

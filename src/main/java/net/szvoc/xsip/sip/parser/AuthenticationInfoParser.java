@@ -13,9 +13,7 @@ import net.szvoc.xsip.sip.parser.internal.ParametersToken;
  * authentication with HTTP Digest.  A UAS MAY include this header field
  * in a 2xx response to a request that was successfully authenticated
  * using digest based on the Authorization header field.
- * <p>
  * Syntax and semantics follow those specified in RFC 2617 [17].
- * <p>
  * Example:
  * Authentication-Info: nextnonce="47364c23432d2e131a5fb210812c"
  */
