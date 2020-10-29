@@ -18,7 +18,7 @@ public final class ParserFactory {
             Class<? extends Parser> type = subTypes.stream()
                     .filter(c -> {
                         BindingHeader annotation = c.getAnnotation(BindingHeader.class);
-                        return annotation != null && Arrays.stream(annotation.value()).anyMatch(p -> p.equals(k));
+                        return annotation != null && Arrays.stream(annotation.value()).anyMatch(p -> p.equalsIgnoreCase(k));
                     })
                     .findAny()
                     .orElse(null);
