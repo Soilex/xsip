@@ -12,7 +12,7 @@ public class ContactParser extends Parser<Contact> {
     @Override
     protected Header<Contact> doParse(String headerName, Lexer lexer) throws SyntaxException {
         Header<Contact> header = new Header<>(headerName);
-        new ContactToken(true, lexer, header::add).match();
+        resolve(header, lexer, () -> new ContactToken(true, lexer, header::add).match());
         return header;
     }
 }

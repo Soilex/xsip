@@ -51,7 +51,7 @@ public class ParametersToken extends Token<List<Parameter>> {
             new WordToken(true, lexer, parameter::setName).match();
             if (lexer.expect(CharacterType.EQUALS) != null) {
                 new WordToken(true, lexer, parameter::setValue)
-                        .expect(CharacterType.COLON, CharacterType.LESS_THAN, CharacterType.GREATER_THAN, CharacterType.SLASH)
+                        .expect(CharacterType.SLASH)
                         .match();
             }
             parameters.add(parameter);
