@@ -18,9 +18,9 @@ public class ViaTests {
         Header<Via> header = Parser.parse(new Lexer(text));
         Via via = header.get();
         assert header.getName().equals("Via");
-        assert via.getProtocol() == Protocol.SIP;
+        assert via.getProtocol().equals(Protocol.SIP);
         assert via.getVersion().equals("2.0");
-        assert via.getTransport() == Transport.UDP;
+        assert via.getTransport().equals(Transport.UDP);
         assert via.getHost().equals("127.0.0.1");
         assert via.getPort() == 54283;
         assert via.getBranch().equals("z9hG4bKPj393be92570584d94b167c3470ec70c4b");
@@ -33,9 +33,9 @@ public class ViaTests {
         Header<Via> header = Parser.parse(new Lexer(text));
         Via via = header.get();
         assert header.getName().equals("Via");
-        assert via.getProtocol() == Protocol.SIP;
+        assert via.getProtocol().equals(Protocol.SIP);
         assert via.getVersion().equals("2.0");
-        assert via.getTransport() == Transport.UDP;
+        assert via.getTransport().equals(Transport.UDP);
         assert via.getHost().equals("127.0.0.1");
         assert via.getPort() == 0;
         assert via.getBranch().equals("z9hG4bKPj393be92570584d94b167c3470ec70c4b");

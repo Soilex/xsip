@@ -2,6 +2,7 @@ package net.szvoc.xsip.sip.header;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.szvoc.xsip.sip.common.EnumEx;
 import net.szvoc.xsip.sip.common.Parametric;
 import net.szvoc.xsip.sip.common.Protocol;
 import net.szvoc.xsip.sip.common.Transport;
@@ -11,7 +12,7 @@ public class Via extends Parametric<String> {
 
     @Getter
     @Setter
-    private Protocol protocol;
+    private EnumEx<Protocol> protocol;
 
     @Getter
     @Setter
@@ -19,7 +20,7 @@ public class Via extends Parametric<String> {
 
     @Getter
     @Setter
-    private Transport transport;
+    private EnumEx<Transport> transport;
 
     @Getter
     @Setter

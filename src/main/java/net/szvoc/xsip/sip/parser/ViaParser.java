@@ -15,11 +15,11 @@ public class ViaParser extends Parser<Via> {
     protected Header<Via> doParse(String headerName, Lexer lexer) throws SyntaxException {
         Header<Via> header = new Header<>(headerName);
         Via via = new Via();
-        new EnumToken(Protocol.UNKNOWN, true, lexer, c -> via.setProtocol((Protocol) c)).match();
+        new EnumToken<Protocol>(Protocol.UNKNOWN, true, lexer, via::setProtocol).match();
         new CharacterToken(CharacterType.SLASH, true, lexer).match();
         new WordToken(true, lexer, via::setVersion).match();
         new CharacterToken(CharacterType.SLASH, true, lexer).match();
-        new EnumToken(Transport.UNKNOWN, true, lexer, c -> via.setTransport((Transport) c)).match();
+        new EnumToken<Transport>(Transport.UNKNOWN, true, lexer, via::setTransport).match();
         new WordToken(true, lexer, via::setHost).match();
         new ComplexToken(false, lexer)
                 .define(new CharacterToken(CharacterType.COLON, true, lexer))

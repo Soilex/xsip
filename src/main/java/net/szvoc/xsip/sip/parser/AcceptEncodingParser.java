@@ -1,11 +1,13 @@
 package net.szvoc.xsip.sip.parser;
 
-import net.szvoc.xsip.sip.common.CharacterType;
 import net.szvoc.xsip.sip.header.AcceptEncoding;
 import net.szvoc.xsip.sip.header.Header;
 import net.szvoc.xsip.sip.header.HeaderName;
 import net.szvoc.xsip.sip.parser.annotation.BindingHeader;
-import net.szvoc.xsip.sip.parser.internal.*;
+import net.szvoc.xsip.sip.parser.internal.ComplexToken;
+import net.szvoc.xsip.sip.parser.internal.Lexer;
+import net.szvoc.xsip.sip.parser.internal.ParametersToken;
+import net.szvoc.xsip.sip.parser.internal.WordToken;
 
 /**
  * The Accept-Encoding header field is similar to Accept, but restricts
