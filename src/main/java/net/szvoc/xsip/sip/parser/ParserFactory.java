@@ -41,7 +41,7 @@ public final class ParserFactory {
             }
         });
         if (ctor == null) {
-            throw new TypeNotPresentException("HeaderName." + headerName.name() + "'s binding type is missing.", null);
+            throw new TypeNotPresentException("Binding type of HeaderName." + headerName.name() + " is missing.", null);
         }
         try {
             return ctor.newInstance();
