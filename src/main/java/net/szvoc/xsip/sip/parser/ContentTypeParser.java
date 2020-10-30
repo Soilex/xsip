@@ -1,6 +1,7 @@
 package net.szvoc.xsip.sip.parser;
 
 import net.szvoc.xsip.sip.common.CharacterType;
+import net.szvoc.xsip.sip.common.EnumEx;
 import net.szvoc.xsip.sip.header.ContentType;
 import net.szvoc.xsip.sip.header.Header;
 import net.szvoc.xsip.sip.header.HeaderName;
@@ -24,7 +25,7 @@ import net.szvoc.xsip.sip.parser.internal.WordToken;
 @BindingHeader(HeaderName.CONTENT_TYPE)
 public class ContentTypeParser extends Parser<ContentType> {
     @Override
-    protected Header<ContentType> doParse(String headerName, Lexer lexer) throws SyntaxException {
+    protected Header<ContentType> doParse(EnumEx<HeaderName> headerName, Lexer lexer) throws SyntaxException {
         Header<ContentType> header = new Header<>(headerName);
         ContentType contentType = new ContentType();
         new WordToken(true, lexer, contentType::setMainType).match();

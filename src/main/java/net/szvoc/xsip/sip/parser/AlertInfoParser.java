@@ -1,6 +1,7 @@
 package net.szvoc.xsip.sip.parser;
 
 import net.szvoc.xsip.sip.common.CharacterType;
+import net.szvoc.xsip.sip.common.EnumEx;
 import net.szvoc.xsip.sip.header.Header;
 import net.szvoc.xsip.sip.header.HeaderName;
 import net.szvoc.xsip.sip.parser.annotation.BindingHeader;
@@ -27,7 +28,7 @@ import net.szvoc.xsip.sip.parser.internal.StringToken;
 @BindingHeader(HeaderName.ALERT_INFO)
 public class AlertInfoParser extends Parser<String> {
     @Override
-    protected Header<String> doParse(String headerName, Lexer lexer) throws SyntaxException {
+    protected Header<String> doParse(EnumEx<HeaderName> headerName, Lexer lexer) throws SyntaxException {
         Header<String> header = new Header<>(headerName);
         new StringToken(true, lexer, header::add)
                 .startWith(CharacterType.LESS_THAN)

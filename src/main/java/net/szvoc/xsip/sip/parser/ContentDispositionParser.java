@@ -1,5 +1,6 @@
 package net.szvoc.xsip.sip.parser;
 
+import net.szvoc.xsip.sip.common.EnumEx;
 import net.szvoc.xsip.sip.header.ContentDisposition;
 import net.szvoc.xsip.sip.header.Header;
 import net.szvoc.xsip.sip.header.HeaderName;
@@ -52,7 +53,7 @@ import net.szvoc.xsip.sip.parser.internal.WordToken;
 @BindingHeader(HeaderName.CONTENT_DISPOSITION)
 public class ContentDispositionParser extends Parser<ContentDisposition> {
     @Override
-    protected Header<ContentDisposition> doParse(String headerName, Lexer lexer) throws SyntaxException {
+    protected Header<ContentDisposition> doParse(EnumEx<HeaderName> headerName, Lexer lexer) throws SyntaxException {
         Header<ContentDisposition> header = new Header<>(headerName);
         ContentDisposition contentDisposition = new ContentDisposition();
         new WordToken(true, lexer, contentDisposition::setDispositionType).match();

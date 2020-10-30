@@ -1,6 +1,7 @@
 package net.szvoc.xsip.sip.parser;
 
 import net.szvoc.xsip.sip.common.CharacterType;
+import net.szvoc.xsip.sip.common.EnumEx;
 import net.szvoc.xsip.sip.common.Protocol;
 import net.szvoc.xsip.sip.common.Transport;
 import net.szvoc.xsip.sip.header.Header;
@@ -12,7 +13,7 @@ import net.szvoc.xsip.sip.parser.internal.*;
 @BindingHeader(HeaderName.VIA)
 public class ViaParser extends Parser<Via> {
     @Override
-    protected Header<Via> doParse(String headerName, Lexer lexer) throws SyntaxException {
+    protected Header<Via> doParse(EnumEx<HeaderName> headerName, Lexer lexer) throws SyntaxException {
         Header<Via> header = new Header<>(headerName);
         Via via = new Via();
         new EnumToken<Protocol>(Protocol.UNKNOWN, true, lexer, via::setProtocol).match();

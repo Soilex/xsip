@@ -2,6 +2,7 @@ package net.szvoc.xsip.header;
 
 import net.szvoc.xsip.sip.header.Contact;
 import net.szvoc.xsip.sip.header.Header;
+import net.szvoc.xsip.sip.header.HeaderName;
 import net.szvoc.xsip.sip.parser.Parser;
 import net.szvoc.xsip.sip.parser.SyntaxException;
 import net.szvoc.xsip.sip.parser.internal.Lexer;
@@ -18,7 +19,7 @@ class ContactTests {
     void parse() throws SyntaxException {
         String text = "Contact: \"sonic\" <sip:1001@127.0.0.1:61917;ob;received=192.168.1.2>;tag=123456789;expires=3600, \"Mr. Watson\" <mailto:watson@bell-telephone.com>;q=0.1\r\n";
         Header<Contact> header = Parser.parse(new Lexer(text));
-        assert header.getName().equals("Contact");
+        assert header.getName().equals(HeaderName.CONTACT);
         Iterator<Contact> iterator = header.iterator();
         Contact first = iterator.next();
         assert first.getName().equals("sonic");

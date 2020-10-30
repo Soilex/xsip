@@ -30,4 +30,8 @@ public class EnumEx<T extends Enum<T>> {
     public int hashCode() {
         return origin.hashCode();
     }
+
+    public boolean equals(T value, String origin) {
+        return this.value == value && this.origin.equalsIgnoreCase(origin);
+    }
 }

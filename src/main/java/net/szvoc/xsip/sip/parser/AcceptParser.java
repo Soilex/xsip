@@ -1,6 +1,7 @@
 package net.szvoc.xsip.sip.parser;
 
 import net.szvoc.xsip.sip.common.CharacterType;
+import net.szvoc.xsip.sip.common.EnumEx;
 import net.szvoc.xsip.sip.header.ContentType;
 import net.szvoc.xsip.sip.header.Header;
 import net.szvoc.xsip.sip.header.HeaderName;
@@ -19,7 +20,7 @@ import net.szvoc.xsip.sip.parser.internal.*;
 @BindingHeader(HeaderName.ACCEPT)
 public class AcceptParser extends Parser<ContentType> {
     @Override
-    protected Header<ContentType> doParse(String headerName, Lexer lexer) throws SyntaxException {
+    protected Header<ContentType> doParse(EnumEx<HeaderName> headerName, Lexer lexer) throws SyntaxException {
         Header<ContentType> header = new Header<>(headerName);
         resolve(header, lexer, () -> {
             ContentType contentType = new ContentType();

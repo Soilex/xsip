@@ -3,6 +3,7 @@ package net.szvoc.xsip.header;
 import com.google.common.base.Strings;
 import net.szvoc.xsip.sip.header.AcceptLanguage;
 import net.szvoc.xsip.sip.header.Header;
+import net.szvoc.xsip.sip.header.HeaderName;
 import net.szvoc.xsip.sip.parser.Parser;
 import net.szvoc.xsip.sip.parser.internal.Lexer;
 import org.junit.jupiter.api.Test;
@@ -17,7 +18,7 @@ class AcceptLanguageTests {
     void parse() {
         String text = "Accept-Language: da, en-gb;q=0.8, en;q=0.7\r\n";
         Header<AcceptLanguage> header = Parser.parse(new Lexer(text));
-        assert header.getName().equals("Accept-Language");
+        assert header.getName().equals(HeaderName.ACCEPT_LANGUAGE);
 
         Iterator<AcceptLanguage> iterator = header.iterator();
 

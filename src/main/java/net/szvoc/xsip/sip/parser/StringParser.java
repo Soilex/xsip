@@ -1,5 +1,6 @@
 package net.szvoc.xsip.sip.parser;
 
+import net.szvoc.xsip.sip.common.EnumEx;
 import net.szvoc.xsip.sip.header.Header;
 import net.szvoc.xsip.sip.header.HeaderName;
 import net.szvoc.xsip.sip.parser.annotation.BindingHeader;
@@ -42,7 +43,7 @@ import net.szvoc.xsip.sip.parser.internal.WordToken;
 @BindingHeader({HeaderName.CALL_ID, HeaderName.CONTENT_ENCODING})
 public class StringParser extends Parser<String> {
     @Override
-    protected Header<String> doParse(String headerName, Lexer lexer) throws SyntaxException {
+    protected Header<String> doParse(EnumEx<HeaderName> headerName, Lexer lexer) throws SyntaxException {
         Header<String> header = new Header<>(headerName);
         new WordToken(true, lexer, header::add).match();
         return header;

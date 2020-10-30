@@ -1,6 +1,7 @@
 package net.szvoc.xsip.sip.parser;
 
 import net.szvoc.xsip.sip.common.CharacterType;
+import net.szvoc.xsip.sip.common.EnumEx;
 import net.szvoc.xsip.sip.header.CallInfo;
 import net.szvoc.xsip.sip.header.Header;
 import net.szvoc.xsip.sip.header.HeaderName;
@@ -34,7 +35,7 @@ import net.szvoc.xsip.sip.parser.internal.WordToken;
 @BindingHeader(HeaderName.CALL_INFO)
 public class CallInfoParser extends Parser<CallInfo> {
     @Override
-    protected Header<CallInfo> doParse(String headerName, Lexer lexer) throws SyntaxException {
+    protected Header<CallInfo> doParse(EnumEx<HeaderName> headerName, Lexer lexer) throws SyntaxException {
         Header<CallInfo> header = new Header<>(headerName);
         resolve(header, lexer, () -> {
             CallInfo callInfo = new CallInfo();

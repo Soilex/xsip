@@ -1,5 +1,6 @@
 package net.szvoc.xsip.sip.parser;
 
+import net.szvoc.xsip.sip.common.EnumEx;
 import net.szvoc.xsip.sip.header.AcceptEncoding;
 import net.szvoc.xsip.sip.header.Header;
 import net.szvoc.xsip.sip.header.HeaderName;
@@ -28,7 +29,7 @@ import net.szvoc.xsip.sip.parser.internal.WordToken;
 @BindingHeader(HeaderName.ACCEPT_ENCODING)
 public class AcceptEncodingParser extends Parser<AcceptEncoding> {
     @Override
-    protected Header<AcceptEncoding> doParse(String headerName, Lexer lexer) throws SyntaxException {
+    protected Header<AcceptEncoding> doParse(EnumEx<HeaderName> headerName, Lexer lexer) throws SyntaxException {
         Header<AcceptEncoding> header = new Header<>(headerName);
         resolve(header, lexer, () -> {
             AcceptEncoding acceptEncoding = new AcceptEncoding();

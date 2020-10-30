@@ -1,6 +1,7 @@
 package net.szvoc.xsip.sip.parser;
 
 import net.szvoc.xsip.sip.common.CharacterType;
+import net.szvoc.xsip.sip.common.EnumEx;
 import net.szvoc.xsip.sip.header.AcceptLanguage;
 import net.szvoc.xsip.sip.header.Header;
 import net.szvoc.xsip.sip.header.HeaderName;
@@ -22,7 +23,7 @@ import net.szvoc.xsip.sip.parser.internal.*;
 @BindingHeader(HeaderName.ACCEPT_LANGUAGE)
 public class AcceptLanguageParser extends Parser<AcceptLanguage> {
     @Override
-    protected Header<AcceptLanguage> doParse(String headerName, Lexer lexer) throws SyntaxException {
+    protected Header<AcceptLanguage> doParse(EnumEx<HeaderName> headerName, Lexer lexer) throws SyntaxException {
         Header<AcceptLanguage> header = new Header<>(headerName);
         resolve(header, lexer, () -> {
             AcceptLanguage acceptLanguage = new AcceptLanguage();

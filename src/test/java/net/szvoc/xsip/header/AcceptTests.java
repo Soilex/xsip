@@ -2,6 +2,7 @@ package net.szvoc.xsip.header;
 
 import net.szvoc.xsip.sip.header.ContentType;
 import net.szvoc.xsip.sip.header.Header;
+import net.szvoc.xsip.sip.header.HeaderName;
 import net.szvoc.xsip.sip.parser.Parser;
 import net.szvoc.xsip.sip.parser.SyntaxException;
 import net.szvoc.xsip.sip.parser.internal.Lexer;
@@ -17,7 +18,7 @@ class AcceptTests {
     void parse() throws SyntaxException {
         String text = "Accept: application/sdp;q-value=0.5;level=1, application/x-private;q-value=0.3, text/html\r\n";
         Header<ContentType> header = Parser.parse(new Lexer(text));
-        assert header.getName().equals("Accept");
+        assert header.getName().equals(HeaderName.ACCEPT);
 
         Iterator<ContentType> iterator = header.iterator();
 

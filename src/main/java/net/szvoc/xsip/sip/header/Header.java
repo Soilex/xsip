@@ -1,6 +1,7 @@
 package net.szvoc.xsip.sip.header;
 
 import lombok.Getter;
+import net.szvoc.xsip.sip.common.EnumEx;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
@@ -11,9 +12,9 @@ public class Header<T> {
     private List<T> values = new ArrayList<>();
 
     @Getter
-    private String name;
+    private EnumEx<HeaderName> name;
 
-    public Header(String name) {
+    public Header(EnumEx<HeaderName> name) {
         this.name = name;
     }
 

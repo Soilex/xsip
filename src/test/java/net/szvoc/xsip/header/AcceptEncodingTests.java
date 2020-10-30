@@ -2,6 +2,7 @@ package net.szvoc.xsip.header;
 
 import net.szvoc.xsip.sip.header.AcceptEncoding;
 import net.szvoc.xsip.sip.header.Header;
+import net.szvoc.xsip.sip.header.HeaderName;
 import net.szvoc.xsip.sip.parser.Parser;
 import net.szvoc.xsip.sip.parser.SyntaxException;
 import net.szvoc.xsip.sip.parser.internal.Lexer;
@@ -17,7 +18,7 @@ class AcceptEncodingTests {
     void parse() throws SyntaxException {
         String text = "Accept-Encoding: deflate, gzip;q=1.0, *;q=0.5\r\n";
         Header<AcceptEncoding> header = Parser.parse(new Lexer(text));
-        assert header.getName().equals("Accept-Encoding");
+        assert header.getName().equals(HeaderName.ACCEPT_ENCODING);
 
         Iterator<AcceptEncoding> iterator = header.iterator();
 

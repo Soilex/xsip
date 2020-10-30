@@ -2,6 +2,7 @@ package net.szvoc.xsip.header;
 
 import net.szvoc.xsip.sip.header.Contact;
 import net.szvoc.xsip.sip.header.Header;
+import net.szvoc.xsip.sip.header.HeaderName;
 import net.szvoc.xsip.sip.parser.Parser;
 import net.szvoc.xsip.sip.parser.SyntaxException;
 import net.szvoc.xsip.sip.parser.internal.Lexer;
@@ -15,7 +16,7 @@ public class FromTests {
         String text = "From: \"sonic\" <sip:1001@szvoc.net>;tag=21bc75cd4dfb4bc3896fc5c0d0ed9cea\r\n";
         Header<Contact> header = Parser.parse(new Lexer(text));
         Contact contact = header.get();
-        assert header.getName().equals("From");
+        assert header.getName().equals(HeaderName.FROM);
         assert contact.getName().equals("sonic");
         assert contact.getUri().getScheme().equals("sip");
         assert contact.getUri().getUser().equals("1001");

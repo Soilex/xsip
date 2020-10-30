@@ -1,6 +1,7 @@
 package net.szvoc.xsip.sip.parser;
 
 import net.szvoc.xsip.sip.common.CharacterType;
+import net.szvoc.xsip.sip.common.EnumEx;
 import net.szvoc.xsip.sip.header.AuthenticationInfo;
 import net.szvoc.xsip.sip.header.Header;
 import net.szvoc.xsip.sip.header.HeaderName;
@@ -20,7 +21,7 @@ import net.szvoc.xsip.sip.parser.internal.ParametersToken;
 @BindingHeader(HeaderName.AUTHENTICATION_INFO)
 public class AuthenticationInfoParser extends Parser<AuthenticationInfo> {
     @Override
-    protected Header<AuthenticationInfo> doParse(String headerName, Lexer lexer) throws SyntaxException {
+    protected Header<AuthenticationInfo> doParse(EnumEx<HeaderName> headerName, Lexer lexer) throws SyntaxException {
         Header<AuthenticationInfo> header = new Header<>(headerName);
         AuthenticationInfo authenticationInfo = new AuthenticationInfo();
         new ParametersToken(true, lexer, authenticationInfo::setParameters)

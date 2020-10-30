@@ -2,6 +2,7 @@ package net.szvoc.xsip.header;
 
 import net.szvoc.xsip.sip.header.CallInfo;
 import net.szvoc.xsip.sip.header.Header;
+import net.szvoc.xsip.sip.header.HeaderName;
 import net.szvoc.xsip.sip.parser.Parser;
 import net.szvoc.xsip.sip.parser.internal.Lexer;
 import org.junit.jupiter.api.Test;
@@ -15,7 +16,7 @@ public class CallInfoTests {
     void parse() {
         String text = "Call-Info: <http://wwww.example.com/alice/photo.jpg> ;purpose=icon, <http://www.example.com/alice/>;purpose=info\r\n";
         Header<CallInfo> header = Parser.parse(new Lexer(text));
-        assert header.getName().equals("Call-Info");
+        assert header.getName().equals(HeaderName.CALL_INFO);
         Iterator<CallInfo> iterator = header.iterator();
         CallInfo first = iterator.next();
         assert first.getUri().equals("http://wwww.example.com/alice/photo.jpg");

@@ -1,6 +1,7 @@
 package net.szvoc.xsip.sip.parser;
 
 import net.szvoc.xsip.sip.common.CharacterType;
+import net.szvoc.xsip.sip.common.EnumEx;
 import net.szvoc.xsip.sip.header.Authorization;
 import net.szvoc.xsip.sip.header.Header;
 import net.szvoc.xsip.sip.header.HeaderName;
@@ -25,7 +26,7 @@ import net.szvoc.xsip.sip.parser.internal.WordToken;
 @BindingHeader(HeaderName.AUTHORIZATION)
 public class AuthorizationParser extends Parser<Authorization> {
     @Override
-    protected Header<Authorization> doParse(String headerName, Lexer lexer) throws SyntaxException {
+    protected Header<Authorization> doParse(EnumEx<HeaderName> headerName, Lexer lexer) throws SyntaxException {
         Header<Authorization> header = new Header<>(headerName);
         Authorization authorization = new Authorization();
         new WordToken(true, lexer, authorization::setScheme).match();

@@ -25,7 +25,7 @@ import net.szvoc.xsip.sip.parser.internal.Lexer;
 @BindingHeader(HeaderName.ALLOW)
 public class AllowParser extends Parser<EnumEx<Method>> {
     @Override
-    protected Header<EnumEx<Method>> doParse(String headerName, Lexer lexer) throws SyntaxException {
+    protected Header<EnumEx<Method>> doParse(EnumEx<HeaderName> headerName, Lexer lexer) throws SyntaxException {
         Header<EnumEx<Method>> header = new Header<>(headerName);
         resolve(header, lexer, () -> new EnumToken<Method>(Method.UNKNOWN, true, lexer, header::add).match());
         return header;
